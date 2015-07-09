@@ -1,0 +1,6 @@
+lib_LTLIBRARIES += indicator/libtzsh_indicator_service.la
+indicator_libtzsh_indicator_service_la_SOURCES = indicator/tzsh_indicator_service.c
+indicator_libtzsh_indicator_service_la_CFLAGS = $(AM_CPPFLAGS)
+indicator_libtzsh_indicator_service_la_LIBADD = common/libtzsh_common.la
+libtzshindicatorserviceincludedir = $(includedir)/tzsh
+libtzshindicatorserviceinclude_HEADERS = indicator/tzsh_indicator_service.h

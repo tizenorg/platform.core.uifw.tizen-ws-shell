@@ -1,0 +1,6 @@
+lib_LTLIBRARIES += lockscreen/libtzsh_lockscreen_service.la
+lockscreen_libtzsh_lockscreen_service_la_SOURCES = lockscreen/tzsh_lockscreen_service.c
+lockscreen_libtzsh_lockscreen_service_la_CFLAGS = $(AM_CPPFLAGS)
+lockscreen_libtzsh_lockscreen_service_la_LIBADD = common/libtzsh_common.la
+libtzshlockscreenserviceincludedir = $(includedir)/tzsh
+libtzshlockscreenserviceinclude_HEADERS = lockscreen/tzsh_lockscreen_service.h
