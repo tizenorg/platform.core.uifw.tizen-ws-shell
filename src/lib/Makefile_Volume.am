@@ -1,0 +1,6 @@
+lib_LTLIBRARIES += volume/libtzsh_volume_service.la
+volume_libtzsh_volume_service_la_SOURCES = volume/tzsh_volume_service.c
+volume_libtzsh_volume_service_la_CFLAGS = $(AM_CPPFLAGS)
+volume_libtzsh_volume_service_la_LIBADD = common/libtzsh_common.la
+libtzshvolumeserviceincludedir = $(includedir)/tzsh
+libtzshvolumeserviceinclude_HEADERS = volume/tzsh_volume_service.h

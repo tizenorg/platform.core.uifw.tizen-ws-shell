@@ -1,0 +1,13 @@
+lib_LTLIBRARIES += quickpanel/libtzsh_quickpanel.la
+quickpanel_libtzsh_quickpanel_la_SOURCES = quickpanel/tzsh_quickpanel.c
+quickpanel_libtzsh_quickpanel_la_CFLAGS = $(AM_CPPFLAGS)
+quickpanel_libtzsh_quickpanel_la_LIBADD = common/libtzsh_common.la
+libtzshquickpanelincludedir = $(includedir)/tzsh
+libtzshquickpanelinclude_HEADERS = quickpanel/tzsh_quickpanel.h
+
+lib_LTLIBRARIES += quickpanel/libtzsh_quickpanel_service.la
+quickpanel_libtzsh_quickpanel_service_la_SOURCES = quickpanel/tzsh_quickpanel_service.c
+quickpanel_libtzsh_quickpanel_service_la_CFLAGS = $(AM_CPPFLAGS)
+quickpanel_libtzsh_quickpanel_service_la_LIBADD = common/libtzsh_common.la
+libtzshquickpanelserviceincludedir = $(includedir)/tzsh
+libtzshquickpanelserviceinclude_HEADERS = quickpanel/tzsh_quickpanel_service.h

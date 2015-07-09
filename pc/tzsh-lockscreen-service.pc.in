@@ -1,0 +1,11 @@
+prefix=@prefix@
+libdir=@libdir@
+includedir=@includedir@
+datadir=@datadir@
+pkgdatadir=@datadir@/tzsh
+
+Name: tzsh
+Description: Support Lockscreen Service in Tizen Window System.
+Version: @VERSION@
+Libs: -L${libdir} -ltzsh_common -ltzsh_lockscreen_service
+Cflags: -I${includedir}/tzsh

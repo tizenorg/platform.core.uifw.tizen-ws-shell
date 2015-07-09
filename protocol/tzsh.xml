@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="tizen_ws_shell">
+
+  <copyright>
+  </copyright>
+
+  <interface name="tizen_ws_shell" version="1">
+    <description summary="Tizsn Shell support">
+    </description>
+
+    <request name="destroy" type="destructor">
+      <description summary="destroy tizen_ws_shell"/>
+    </request>
+
+    <request name="service_create" version="1">
+      <description summary="create new service">
+      </description>
+      <arg name="id" type="new_id" interface="tws_service"/>
+      <arg name="win" type="uint"/>
+      <arg name="name" type="string"/>
+    </request>
+
+    <request name="region_create">
+      <description summary="create new region">
+        Ask the tzsh server to create a new region.
+      </description>
+      <arg name="id" type="new_id" interface="tws_region"/>
+    </request>
+
+    <event name="service_register">
+      <description summary="">
+      </description>
+      <arg name="name" type="string"/>
+    </event>
+
+    <event name="service_unregister">
+      <description summary="">
+      </description>
+      <arg name="name" type="string"/>
+    </event>
+
+    <!-- The below protocols are provided to users for Tizen WS service.
+         Please insert from here additional protocol for users -->
+    <request name="quickpanel_get" version="1">
+      <description summary="get the handle of quickpanel service">
+      </description>
+      <arg name="id" type="new_id" interface="tws_quickpanel"/>
+      <arg name="win" type="uint"/>
+    </request>
+
+    <!-- The end of protocols for users -->
+
+  </interface>
+
+  <interface name="tws_quickpanel" version="1">
+    <description summary="">
+    </description>
+
+    <enum name="error">
+      <entry name="request_rejected" value="0" summary="given reuqest is denied"/>
+    </enum>
+
+    <request name="release" type="destructor">
+      <description summary="release the handle of tws_quickpanel">
+      </description>
+    </request>
+
+    <request name="show">
+      <description summary="show the quickpanel window">
+        This request shows the quickpanel window immedietly, if it's possible.
+        In other words, this request may be denied by server.
+        Basically, this request will be denied, when application window is laying 
+        on background.
+      </description>
+    </request>
+
+    <request name="hide">
+      <description summary="hide the quickpanel window">
+      </description>
+    </request>
+
+    <request name="enable">
+      <description summary="enable the operation of quickpanel on user window">
+      </description>
+    </request>
+
+    <request name="disable">
+      <description summary="disable the operation of quickpanel on user window">
+      </description>
+    </request>
+  </interface>
+
+  <interface name="tws_region" version="1">
+    <description summary="region interface">
+      A region object describes an area.
+
+      Region objects are used to describe the content and handler
+      regions of a service window.
+    </description>
+
+    <request name="destroy" type="destructor">
+      <description summary="destroy region">
+        Destroy the region. This will invalidate the object ID.
+      </description>
+    </request>
+
+    <request name="add">
+      <description summary="add rectangle to region">
+        Add the specified rectangle to the region.
+      </description>
+      <arg name="x" type="int"/>
+      <arg name="y" type="int"/>
+      <arg name="w" type="int"/>
+      <arg name="h" type="int"/>
+    </request>
+
+    <request name="subtract">
+      <description summary="subtract rectangle from region">
+        Subtract the specified rectangle from the region.
+      </description>
+      <arg name="x" type="int"/>
+      <arg name="y" type="int"/>
+      <arg name="w" type="int"/>
+      <arg name="h" type="int"/>
+    </request>
+  </interface>
+
+  <interface name="tws_service" version="1">
+    <description summary="">
+    </description>
+
+    <enum name="region_type">
+      <entry name="handler" value="0"/>
+      <entry name="content" value="1"/>
+    </enum>
+
+    <request name="destroy" type="destructor">
+      <description summary="destroy service">
+      </description>
+    </request>
+
+    <request name="region_set">
+      <arg name="type" type="int"/>
+      <arg name="angle" type="int"/>
+      <arg name="region" type="object" interface="tws_region"/>
+    </request>
+  </interface>
+</protocol>

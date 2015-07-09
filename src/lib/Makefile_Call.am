@@ -1,0 +1,6 @@
+lib_LTLIBRARIES += call/libtzsh_call_service.la
+call_libtzsh_call_service_la_SOURCES = call/tzsh_call_service.c
+call_libtzsh_call_service_la_CFLAGS = $(AM_CPPFLAGS)
+call_libtzsh_call_service_la_LIBADD = common/libtzsh_common.la
+libtzshcallserviceincludedir = $(includedir)/tzsh
+libtzshcallserviceinclude_HEADERS = call/tzsh_call_service.h
