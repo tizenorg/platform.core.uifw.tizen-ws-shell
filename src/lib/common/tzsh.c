@@ -31,8 +31,6 @@ struct _Tzsh_Destroy_Cb_Data
 
 __thread int tzsh_last_error;
 
-int tzsh_dispatch(tzsh_h tzsh);
-
 static void
 _tizen_ws_shell_cb_service_register(void *data, struct tizen_ws_shell *tws, const char *name)
 {
@@ -232,7 +230,7 @@ tzsh_service_exist_check(tzsh_h tzsh, const char *name)
    if (!tzsh)
      return false;
 
-   tzsh_dispatch(tzsh);
+   wl_display_dispatch_pending(tzsh->disp);
 
    len = strlen(name);
    wl_list_for_each(sd, &tzsh->registered_service_list, link)

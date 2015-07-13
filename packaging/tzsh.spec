@@ -8,8 +8,7 @@ Summary:        Tizen Window System Shell
 License:        MIT
 Group:          Graphics & UI Framework/Wayland Window System
 Url:            http://www.samsung.com
-
-Source0:        %name-%version.tar.xz
+Source0:        %name-%version.tar.gz
 Source1001:     %name.manifest
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(capi-base-common)
@@ -27,7 +26,7 @@ Description: %{summary}
 %package devel
 Summary: Development files for package %{name}
 Group:   Graphics & UI Framework/Development
-Requires: libtzsh = %{version}
+Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig(capi-base-common)
 
 %description devel
