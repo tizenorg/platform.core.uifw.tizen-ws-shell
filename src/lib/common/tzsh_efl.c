@@ -1,10 +1,8 @@
-#include <tzsh_private.h>
+#include "tzsh_private.h"
 
 #ifdef HAVE_ECORE_WAYLAND
 #include <Ecore_Wayland.h>
 #endif
-
-#include "tzsh_private.h"
 
 tzsh_h
 tzsh_efl_create(void)

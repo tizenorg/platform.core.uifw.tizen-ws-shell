@@ -13,11 +13,6 @@ if test x$wayland_scanner = x; then
       AC_MSG_ERROR([wayland-scanner is needed to compile Ecore-Buffer])
 fi
 
-PKG_CHECK_MODULES([WAYLAND], [wayland-client])
-PKG_CHECK_MODULES([CAPI_BASE_COMMON], [capi-base-common])
-PKG_CHECK_MODULES([DAEMON], [wayland-server])
-PKG_CHECK_MODULES(WAYLAND_SCANNER, wayland-scanner)
-
 PKG_CHECK_EXISTS([ecore-wayland],
                  [
                   AC_DEFINE([HAVE_ECORE_WAYLAND], [1], [ecore-wayland support for tzsh])
@@ -25,6 +20,15 @@ PKG_CHECK_EXISTS([ecore-wayland],
                   requirement_tzsh_pc="ecore-wayland"
                  ],
                  [have_ecore_wayland="no"])
+
+if test "x${have_ecore_wayland}" = "xyes"; then
+   PKG_CHECK_MODULES([WAYLAND], [wayland-client ecore-wayland])
+else
+   PKG_CHECK_MODULES([WAYLAND], [wayland-client])
+fi
+PKG_CHECK_MODULES([CAPI_BASE_COMMON], [capi-base-common])
+PKG_CHECK_MODULES([DAEMON], [wayland-server])
+PKG_CHECK_MODULES(WAYLAND_SCANNER, wayland-scanner)
 
 AC_MSG_CHECKING([whether to build ecore-wayland backend])
 AC_MSG_RESULT([${have_ecore_wayland}])

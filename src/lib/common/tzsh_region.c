@@ -1,4 +1,4 @@
-#include <tzsh_private.h>
+#include "tzsh_private.h"
 #include "tzsh_region.h"
 
 struct _tzsh_region_s

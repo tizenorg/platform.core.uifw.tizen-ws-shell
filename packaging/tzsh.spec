@@ -1,3 +1,6 @@
+%bcond_with wayland
+%bcond_with x
+
 # to build examples
 %define enable_examples 0
 
@@ -12,7 +15,9 @@ Source0:        %name-%version.tar.gz
 Source1001:     %name.manifest
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(capi-base-common)
-
+%if %{with wayland}
+BuildRequires:  pkgconfig(ecore-wayland)
+%endif
 # requires to build examples
 %if "%{enable_examples}" == "1"
 BuildRequires:  pkgconfig(evas)
