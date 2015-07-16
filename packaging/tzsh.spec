@@ -22,7 +22,6 @@ BuildRequires:  pkgconfig(ecore-wayland)
 %if "%{enable_examples}" == "1"
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(elementary)
-BuildRequires:  pkgconfig(efl-extension)
 %endif
 
 %description
