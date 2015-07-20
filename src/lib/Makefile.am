@@ -12,7 +12,7 @@ AM_CPPFLAGS = \
 -I./quickpanel \
 -I./indicator \
 @WAYLAND_CFLAGS@ \
-@CAPI_BASE_COMMON_CFLAGS@
+@TIZEN_COMMON_CFLAGS@
 
 lib_LTLIBRARIES += common/libtzsh_common.la
 
@@ -23,7 +23,7 @@ common_libtzsh_common_la_SOURCES = \
       common/tzsh_efl.c
 common_libtzsh_common_la_LDFLAGS = -export-dynamic
 common_libtzsh_common_la_CFLAGS = $(AM_CPPFLAGS)
-common_libtzsh_common_la_LIBADD = @WAYLAND_LIBS@ @CAPI_BASE_COMMON_LIBS@
+common_libtzsh_common_la_LIBADD = @WAYLAND_LIBS@ @TIZEN_COMMON_LIBS@
 
 commonlibtzshcommonincludedir = $(includedir)/tzsh
 commonlibtzshcommoninclude_HEADERS = \

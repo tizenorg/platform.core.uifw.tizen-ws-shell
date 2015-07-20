@@ -12,6 +12,10 @@
 #include "tzsh_region.h"
 #include "tzsh_service.h"
 
+#include "dlog.h"
+#undef LOG_TAG
+#define LOG_TAG "TZSH"
+
 #include "config.h"
 
 /* GCC visibility */
@@ -21,13 +25,8 @@
 #define TZSH_EXPORT
 #endif
 
-#ifdef DEBUG_MODE
-# define ERR(f, x...) fprintf(stderr, "ERR: [%30.30s|%04d] " f "\n", __func__, __LINE__, ##x)
-# define INF(f, x...) fprintf(stdout, "INF: [%30.30s|%04d] " f "\n", __func__, __LINE__, ##x)
-#else
-# define ERR(f, x...) NULL
-# define INF(f, x...) NULL
-#endif
+#define ERR(f, x...) LOGE("ERR: " f , ##x)
+#define INF(f, x...) LOGI("INF: " f , ##x)
 
 #define TZSH_ERR_SUCCESS   set_last_result(TZSH_ERROR_NONE)
 

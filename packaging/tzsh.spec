@@ -15,6 +15,7 @@ Source0:        %name-%version.tar.gz
 Source1001:     %name.manifest
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(capi-base-common)
+BuildRequires:  pkgconfig(dlog)
 %if %{with wayland}
 BuildRequires:  pkgconfig(ecore-wayland)
 %endif

@@ -26,7 +26,7 @@ if test "x${have_ecore_wayland}" = "xyes"; then
 else
    PKG_CHECK_MODULES([WAYLAND], [wayland-client])
 fi
-PKG_CHECK_MODULES([CAPI_BASE_COMMON], [capi-base-common])
+PKG_CHECK_MODULES([TIZEN_COMMON], [capi-base-common, dlog])
 PKG_CHECK_MODULES([DAEMON], [wayland-server])
 PKG_CHECK_MODULES(WAYLAND_SCANNER, wayland-scanner)
 
