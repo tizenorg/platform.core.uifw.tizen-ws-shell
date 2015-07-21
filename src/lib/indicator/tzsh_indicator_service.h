@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <tzsh.h>
+#include <tzsh_region.h>
 
 /**
  * @brief Handle for the tizen indicator service.
