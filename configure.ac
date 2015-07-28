@@ -46,7 +46,7 @@ AC_ARG_ENABLE([build-examples],
 AM_CONDITIONAL([BUILD_EXAMPLES], [test "${want_build_examples}" = "yes"])
 
 if test "${want_build_examples}" = "yes"; then
-   PKG_CHECK_MODULES([EFL], [evas elementary efl-extension])
+   PKG_CHECK_MODULES([EFL], [evas elementary])
 fi
 
 AC_CONFIG_FILES([
