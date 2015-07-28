@@ -1,0 +1,6 @@
+lib_LTLIBRARIES += tvservice/libtzsh_tvservice_service.la
+tvservice_libtzsh_tvservice_service_la_SOURCES = tvservice/tzsh_tvservice_service.c
+tvservice_libtzsh_tvservice_service_la_CFLAGS = $(AM_CPPFLAGS)
+tvservice_libtzsh_tvservice_service_la_LIBADD = common/libtzsh_common.la
+libtzshtvserviceserviceincludedir = $(includedir)/tzsh
+libtzshtvserviceserviceinclude_HEADERS = tvservice/tzsh_tvservice_service.h

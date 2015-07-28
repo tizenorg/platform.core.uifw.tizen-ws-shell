@@ -7,12 +7,14 @@ AM_CPPFLAGS = \
    -I$(top_srcdir)/src/lib/volume/ \
    -I$(top_srcdir)/src/lib/call/ \
    -I$(top_srcdir)/src/lib/indicator \
+   -I$(top_srcdir)/src/lib/tvservice \
    -I$(top_builddir)/src/lib/ \
    -I$(top_builddir)/src/lib/quickpanel/ \
    -I$(top_builddir)/src/lib/lockscreen/ \
    -I$(top_builddir)/src/lib/volume/ \
    -I$(top_builddir)/src/lib/call/ \
    -I$(top_builddir)/src/lib/indicator \
+   -I$(top_builddir)/src/lib/tvservice \
    @DAEMON_CFLAGS@
 
 TESTS = \
@@ -41,7 +43,8 @@ $(top_builddir)/src/lib/call/libtzsh_call_service.la \
 $(top_builddir)/src/lib/volume/libtzsh_volume_service.la \
 $(top_builddir)/src/lib/lockscreen/libtzsh_lockscreen_service.la \
 $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel_service.la \
-$(top_builddir)/src/lib/indicator/libtzsh_indicator_service.la
+$(top_builddir)/src/lib/indicator/libtzsh_indicator_service.la \
+$(top_builddir)/src/lib/indicator/libtzsh_tvservice_service.la
 
 TEST_SHELL_LDADD = $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel.la
 
