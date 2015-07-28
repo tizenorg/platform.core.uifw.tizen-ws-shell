@@ -20,7 +20,9 @@ EXTRA_DIST = \
    pc/tzsh-indicator.pc \
    pc/tzsh-indicator-service.pc \
    pc/tzsh-quickpanel.pc \
-   pc/tzsh-quickpanel-service.pc
+   pc/tzsh-quickpanel-service.pc \
+   pc/tzsh-tvsrv.pc \
+   pc/tzsh-tvsrv-service.pc
 
 dist_pkgdata_DATA = protocol/tzsh.xml
 
@@ -36,6 +38,8 @@ pkgconfig_DATA = \
    pc/tzsh-indicator.pc \
    pc/tzsh-indicator-service.pc \
    pc/tzsh-quickpanel.pc \
-   pc/tzsh-quickpanel-service.pc
+   pc/tzsh-quickpanel-service.pc \
+   pc/tzsh-tvsrv.pc \
+   pc/tzsh-tvsrv-service.pc
 
 SUBDIRS = src

@@ -1,0 +1,6 @@
+lib_LTLIBRARIES += tvsrv/libtzsh_tvsrv_service.la
+tvsrv_libtzsh_tvsrv_service_la_SOURCES = tvsrv/tzsh_tvsrv_service.c
+tvsrv_libtzsh_tvsrv_service_la_CFLAGS = $(AM_CPPFLAGS)
+tvsrv_libtzsh_tvsrv_service_la_LIBADD = common/libtzsh_common.la
+libtzshtvsrvserviceincludedir = $(includedir)/tzsh
+libtzshtvsrvserviceinclude_HEADERS = tvsrv/tzsh_tvsrv_service.h

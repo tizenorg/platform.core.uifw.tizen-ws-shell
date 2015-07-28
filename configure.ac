@@ -62,6 +62,8 @@ pc/tzsh-quickpanel.pc
 pc/tzsh-quickpanel-service.pc
 pc/tzsh-indicator.pc
 pc/tzsh-indicator-service.pc
+pc/tzsh-tvsrv.pc
+pc/tzsh-tvsrv-service.pc
 src/Makefile
 src/lib/Makefile
 src/examples/Makefile

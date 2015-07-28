@@ -6,6 +6,7 @@
 #include <tzsh_lockscreen_service.h>
 #include <tzsh_quickpanel_service.h>
 #include <tzsh_indicator_service.h>
+#include <tzsh_tvsrv_service.h>
 
 #include "test-runner.h"
 
@@ -24,6 +25,7 @@ TEST(service_create_test)
    tzsh_volume_service_h vm;
    tzsh_call_service_h cl;
    tzsh_indicator_service_h ind;
+   tzsh_tvsrv_service_h ts;
    tzsh_window win = 0x1234;
 
    tzsh = tzsh_create(TZSH_TOOLKIT_TYPE_UNKNOWN);
@@ -34,12 +36,14 @@ TEST(service_create_test)
    SERVICE_CREATE(vm, volume, tzsh, win);
    SERVICE_CREATE(cl, call, tzsh, win);
    SERVICE_CREATE(ind, indicator, tzsh, win);
+   SERVICE_CREATE(ts, tvsrv, tzsh, win);
 
    SERVICE_DESTROY(quickpanel, qp);
    SERVICE_DESTROY(lockscreen, ls);
    SERVICE_DESTROY(volume, vm);
    SERVICE_DESTROY(call, cl);
    SERVICE_DESTROY(indicator, ind);
+   SERVICE_DESTROY(tvsrv, ts);
 
    tzsh_destroy(tzsh);
 }
