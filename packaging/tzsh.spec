@@ -5,7 +5,7 @@
 %define enable_examples 0
 
 Name:           tzsh
-Version:        0.1.0
+Version:        0.1.1
 Release:        0
 Summary:        Tizen Window System Shell
 License:        MIT
