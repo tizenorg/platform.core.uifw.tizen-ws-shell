@@ -10,20 +10,20 @@ extern "C" {
 
 /**
  * @brief Handle for the tizen tvsrv service.
- * @since_tizen 2.4
+ * @since_tizen 3.0
  */
 typedef struct _tzsh_service_s * tzsh_tvsrv_service_h;
 
 /**
  * @brief Handle for the callback function of tvsrv service.
- * @since_tizen 2.4
+ * @since_tizen 3.0
  */
 typedef void (*tzsh_tvsrv_service_cb)(void *data, tzsh_tvsrv_service_h service, int angle, int opacity);
 
 /**
  * @internal
  * @brief Creates a new tvsrv service handle.
- * @since_tizen 2.4
+ * @since_tizen 3.0
  * @remarks The specific error code can be obtained using the get_last_result() method. Error codes are described in exception section.
  * @param[in] tzsh The #tzsh_h instance
  * @param[in] win The native window to provide service of the tvsrv.
@@ -40,7 +40,7 @@ tzsh_tvsrv_service_h tzsh_tvsrv_service_create(tzsh_h tzsh, tzsh_window win);
 /**
  * @internal
  * @brief Destroys the given tvsrv service handle.
- * @since_tizen 2.4
+ * @since_tizen 3.0
  * @param[in] service The tvsrv service handle to be destroyed
  * @return @c 0 on success, otherwise a negative error value
  * @retval #TZSH_ERROR_NONE Successful

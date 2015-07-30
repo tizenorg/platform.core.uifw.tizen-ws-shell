@@ -48,6 +48,12 @@
       <arg name="win" type="uint"/>
     </request>
 
+    <request name="tvsrv_get" version="1">
+      <description summary="get the handle of tvsrv service">
+      </description>
+      <arg name="id" type="new_id" interface="tws_tvsrv"/>
+      <arg name="win" type="uint"/>
+    </request>
     <!-- The end of protocols for users -->
 
   </interface>
@@ -144,5 +150,29 @@
       <arg name="angle" type="int"/>
       <arg name="region" type="object" interface="tws_region"/>
     </request>
+  </interface>
+
+  <interface name="tws_tvsrv" version="1">
+     <description summary="interface for tv application">
+       This interface provides protocol to request for binding with tv service 
+       window.
+    </description>
+
+    <enum name="error">
+      <entry name="request_rejected" value="0" summary="given reuqest is denied"/>
+    </enum>
+
+    <request name="release" type="destructor">
+      <description summary="release the handle of tws_tvsrv">
+      </description>
+    </request>
+
+    <request name="bind" version="1">
+      <description summary="request for binding with tv service window">
+        Request for binding with tv service window, user window can set
+        tv service window as transient-for window through this request.
+      </description>
+    </request>
+
   </interface>
 </protocol>
