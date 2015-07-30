@@ -174,5 +174,12 @@
       </description>
     </request>
 
+    <request name="unbind" version="1">
+      <description summary="request for unbinding with tv service window">
+        Request for un-binding with tv service window, user window can unset
+        transient-for relation with tv service window through this request.
+      </description>
+    </request>
+
   </interface>
 </protocol>
