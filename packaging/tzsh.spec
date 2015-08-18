@@ -3,7 +3,7 @@
 
 # to build examples
 %define enable_examples 0
-%define with_tests 1
+%define with_tests 0
 
 Name:           tzsh
 Version:        0.1.3
