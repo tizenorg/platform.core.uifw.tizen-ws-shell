@@ -10,7 +10,6 @@
 struct daemon
 {
    struct wl_display *wl_display;
-   struct wl_global *global;
 };
 
 struct daemon *d = NULL;
@@ -18,14 +17,66 @@ struct daemon *d = NULL;
 static void
 _tizen_ws_shell_cb_destroy(struct wl_client *client, struct wl_resource *resource)
 {
-   (void)client;
-   (void)resource;
+   wl_resource_destroy(resource);
 }
 
 static void
-_tizen_ws_shell_cb_service_create(struct wl_client *client, struct wl_resource *resource, uint32_t id, uint32_t win, char *name)
+_service_cb_destroy(struct wl_client *client,
+                    struct wl_resource *resource)
 {
+   wl_resource_destroy(resource);
+}
 
+static void
+_indicator_service_cb_destroy(struct wl_client *client,
+                              struct wl_resource *resource)
+{
+   wl_resource_destroy(resource);
+}
+
+static const struct tws_service_indicator_interface _indicator_service_implementation = {
+     _indicator_service_cb_destroy
+};
+
+static void
+_service_cb_indicator_get(struct wl_client *client,
+                          struct wl_resource *resource,
+                          uint32_t id)
+{
+   struct wl_resource *res;
+
+   res = wl_resource_create(client, &tws_service_indicator_interface, 1, id);
+   if (!res)
+     {
+        wl_client_post_no_memory(client);
+        assert(0 && "Out of memory");
+     }
+
+   wl_resource_set_implementation(res, &_indicator_service_implementation, NULL, NULL);
+
+   tws_service_indicator_send_property_change(res, 90, 1);
+}
+
+static const struct tws_service_interface _service_implementation = {
+     _service_cb_destroy,
+     NULL,
+     _service_cb_indicator_get,
+     NULL
+};
+
+static void
+_tizen_ws_shell_cb_service_create(struct wl_client *client, struct wl_resource *resource, uint32_t id, uint32_t win, const char *name)
+{
+   struct wl_resource *res;
+
+   res = wl_resource_create(client, &tws_service_interface, 1, id);
+   if (!res)
+     {
+        wl_client_post_no_memory(client);
+        assert(0 && "Out of memory");
+     }
+
+   wl_resource_set_implementation(res, &_service_implementation, NULL, NULL);
 }
 
 static void
@@ -39,7 +90,6 @@ _tizen_ws_shell_cb_quickpanel_get(struct wl_client *client, struct wl_resource *
 {
 
 }
-
 
 static const struct tizen_ws_shell_interface _tizen_ws_shell_implementation = {
      _tizen_ws_shell_cb_destroy,
@@ -79,14 +129,13 @@ daemon_run(void)
    wl_display_destroy(d->wl_display);
    free(d);
    d = NULL;
-   exit(EXIT_SUCCESS);
 }
 
 void
 daemon_create(void)
 {
-   struct wl_global *g;
    int stat;
+   struct wl_global *g;
 
    d = calloc(1, sizeof *d);
    assert(d && "Out of memory");
@@ -97,7 +146,7 @@ daemon_create(void)
    stat = wl_display_add_socket(d->wl_display, NULL);
    assert(stat == 0 && "Failed adding socket");
 
-   d->global = wl_global_create(d->wl_display, &tizen_ws_shell_interface,
+   g = wl_global_create(d->wl_display, &tizen_ws_shell_interface,
                                 1, d, _tizen_ws_shell_cb_bind);
-   assert(d->global && "Creating test global failed");
+   assert(g && "Creating test global failed");
 }

@@ -96,6 +96,37 @@
     </request>
   </interface>
 
+  <interface name="tws_tvsrv" version="1">
+     <description summary="interface for tv application">
+       This interface provides protocol to request for binding with tv service 
+       window.
+    </description>
+
+    <enum name="error">
+      <entry name="request_rejected" value="0" summary="given reuqest is denied"/>
+    </enum>
+
+    <request name="release" type="destructor">
+      <description summary="release the handle of tws_tvsrv">
+      </description>
+    </request>
+
+    <request name="bind" version="1">
+      <description summary="request for binding with tv service window">
+        Request for binding with tv service window, user window can set
+        tv service window as transient-for window through this request.
+      </description>
+    </request>
+
+    <request name="unbind" version="1">
+      <description summary="request for unbinding with tv service window">
+        Request for un-binding with tv service window, user window can unset
+        transient-for relation with tv service window through this request.
+      </description>
+    </request>
+
+  </interface>
+
   <interface name="tws_region" version="1">
     <description summary="region interface">
       A region object describes an area.
@@ -150,36 +181,40 @@
       <arg name="angle" type="int"/>
       <arg name="region" type="object" interface="tws_region"/>
     </request>
+
+    <request name="indicator_get">
+      <arg name="id" type="new_id" interface="tws_service_indicator"/>
+    </request>
+
+    <request name="quickpanel_get">
+      <arg name="id" type="new_id" interface="tws_service_quickpanel"/>
+    </request>
   </interface>
 
-  <interface name="tws_tvsrv" version="1">
-     <description summary="interface for tv application">
-       This interface provides protocol to request for binding with tv service 
-       window.
-    </description>
+  <interface name="tws_service_indicator" version="1">
+    <request name="destroy" type="destructor">
+    </request>
 
-    <enum name="error">
-      <entry name="request_rejected" value="0" summary="given reuqest is denied"/>
+    <event name="property_change">
+      <description summary="">
+      </description>
+      <arg name="angle" type="int"/>
+      <arg name="opacity" type="int"/>
+    </event>
+  </interface>
+
+  <interface name="tws_service_quickpanel" version="1">
+    <enum name="msg">
+      <entry name="show" value="0"/>
+      <entry name="hide" value="1"/>
     </enum>
 
-    <request name="release" type="destructor">
-      <description summary="release the handle of tws_tvsrv">
-      </description>
+    <request name="destroy" type="destructor">
     </request>
 
-    <request name="bind" version="1">
-      <description summary="request for binding with tv service window">
-        Request for binding with tv service window, user window can set
-        tv service window as transient-for window through this request.
-      </description>
+    <request name="msg_send">
+      <arg name="msg" type="uint"/>
     </request>
-
-    <request name="unbind" version="1">
-      <description summary="request for unbinding with tv service window">
-        Request for un-binding with tv service window, user window can unset
-        transient-for relation with tv service window through this request.
-      </description>
-    </request>
-
   </interface>
+
 </protocol>

@@ -375,12 +375,17 @@ int main(int argc, char *argv[])
         // test-daemon process
         if (d_pid == 0)
           {
+             /* set our own XDG_RUNTIME_DIR */
+             set_xdg_runtime_dir();
+
              daemon_create();
              daemon_run(); /* never returns */
-          }
 
-        // wait for initialization of daemon.
-        test_sleep(1);
+             /* cleaning */
+             rmdir_xdg_runtime_dir();
+
+             exit(EXIT_SUCCESS);
+          }
 
 	if (argc == 2) {
 		t = find_test(argv[1]);

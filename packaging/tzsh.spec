@@ -3,6 +3,7 @@
 
 # to build examples
 %define enable_examples 0
+%define with_tests 1
 
 Name:           tzsh
 Version:        0.1.3
@@ -16,9 +17,8 @@ Source1001:     %name.manifest
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(capi-base-common)
 BuildRequires:  pkgconfig(dlog)
-%if %{with wayland}
-BuildRequires:  pkgconfig(ecore-wayland)
-%endif
+BuildRequires:  pkgconfig(ecore)
+
 # requires to build examples
 %if "%{enable_examples}" == "1"
 BuildRequires:  pkgconfig(evas)
@@ -48,13 +48,20 @@ export LDFLAGS+=" -fvisibility=hidden -Wl,--hash-style=both -Wl,--as-needed"
 
 %if "%{enable_examples}" == "1"
 %autogen --enable-build-examples
+%else if "%{with_tests}" == "1"
+%autogen --with-tests=regular
 %else
 %autogen
 %endif
 make %{?jobs:-j%jobs}
 
 %install
+%if "%{with_tests}" == "1"
+make check
 %make_install
+%else
+%make_install
+%endif
 
 %clean
 rm -rf %{buildroot}

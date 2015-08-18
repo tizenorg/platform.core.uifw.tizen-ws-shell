@@ -20,11 +20,15 @@ lib_LTLIBRARIES += common/libtzsh_common.la
 common_libtzsh_common_la_SOURCES = \
       common/tzsh.c \
       common/tzsh_region.c \
-      common/tzsh_service.c \
-      common/tzsh_efl.c
+      common/tzsh_service.c
 common_libtzsh_common_la_LDFLAGS = -export-dynamic
 common_libtzsh_common_la_CFLAGS = $(AM_CPPFLAGS)
 common_libtzsh_common_la_LIBADD = @WAYLAND_LIBS@ @TIZEN_COMMON_LIBS@
+if HAVE_EFL
+common_libtzsh_common_la_SOURCES += common/tzsh_efl.c
+common_libtzsh_common_la_CFLAGS += $(EFL_CFLAGS)
+common_libtzsh_common_la_LIBADD += $(EFL_LIBS)
+endif
 
 commonlibtzshcommonincludedir = $(includedir)/tzsh
 commonlibtzshcommoninclude_HEADERS = \

@@ -52,6 +52,9 @@ service_win_test(tzsh_h tzsh)
    tzsh_region_add(region, 0, 750, 480, 50);
    tzsh_quickpanel_service_handler_region_set(qp_service, 0, region);
    tzsh_region_destroy(region);
+
+   tzsh_quickpanel_service_show(qp_service);
+   tzsh_quickpanel_service_hide(qp_service);
 }
 
 
