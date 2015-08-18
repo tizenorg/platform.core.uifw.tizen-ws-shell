@@ -44,7 +44,7 @@ $(top_builddir)/src/lib/volume/libtzsh_volume_service.la \
 $(top_builddir)/src/lib/lockscreen/libtzsh_lockscreen_service.la \
 $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel_service.la \
 $(top_builddir)/src/lib/indicator/libtzsh_indicator_service.la \
-$(top_builddir)/src/lib/indicator/libtzsh_tvsrv_service.la
+$(top_builddir)/src/lib/tvsrv/libtzsh_tvsrv_service.la
 
 TEST_SHELL_LDADD = $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel.la
 
