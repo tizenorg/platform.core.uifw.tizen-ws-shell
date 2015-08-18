@@ -1,7 +1,6 @@
-#include "tzsh_private.h"
+#include "tzsh_protect.h"
 #include "tzsh_volume_service.h"
 
-TZSH_SERVICE_BASE_DATA(volume)
 TZSH_SERVICE_BASE_IMPL(volume)
 
 TZSH_EXPORT int

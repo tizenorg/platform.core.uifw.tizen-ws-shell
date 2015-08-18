@@ -70,6 +70,28 @@ int tzsh_quickpanel_service_content_region_set(tzsh_quickpanel_service_h service
  */
 int tzsh_quickpanel_service_handler_region_set(tzsh_quickpanel_service_h service, unsigned int angle, tzsh_region_h region);
 
+/**
+ * @internal
+ * @brief Requests to show the quickpanel service window.
+ * @since_tizen 2.4
+ * @param[in] service  The quickpanel service handle
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ */
+int tzsh_quickpanel_service_show(tzsh_quickpanel_service_h service);
+
+/**
+ * @internal
+ * @brief Requests to hide the quickpanel service window.
+ * @since_tizen 2.4
+ * @param[in] service  The quickpanel service handle
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ */
+int tzsh_quickpanel_service_hide(tzsh_quickpanel_service_h service);
+
 #ifdef  __cplusplus
 }
 #endif

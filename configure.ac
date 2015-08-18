@@ -13,6 +13,22 @@ if test x$wayland_scanner = x; then
       AC_MSG_ERROR([wayland-scanner is needed to compile Ecore-Buffer])
 fi
 
+PKG_CHECK_MODULES([WAYLAND], [wayland-client])
+PKG_CHECK_MODULES([TIZEN_COMMON], [capi-base-common, dlog])
+PKG_CHECK_MODULES(WAYLAND_SCANNER, wayland-scanner)
+
+PKG_CHECK_EXISTS([ecore],
+                 [
+                  AC_DEFINE([HAVE_EFL], [1], [ecore support for tzsh])
+                  have_efl="yes"
+                  requirement_tzsh_pc="ecore"
+                 ],
+                 [have_efl="no"])
+AM_CONDITIONAL([HAVE_EFL], [test "x${have_efl}" = "xyes"])
+
+AC_MSG_CHECKING([whether to build efl for tzsh])
+AC_MSG_RESULT([${have_efl}])
+
 PKG_CHECK_EXISTS([ecore-wayland],
                  [
                   AC_DEFINE([HAVE_ECORE_WAYLAND], [1], [ecore-wayland support for tzsh])
@@ -21,17 +37,40 @@ PKG_CHECK_EXISTS([ecore-wayland],
                  ],
                  [have_ecore_wayland="no"])
 
-if test "x${have_ecore_wayland}" = "xyes"; then
-   PKG_CHECK_MODULES([WAYLAND], [wayland-client ecore-wayland])
-else
-   PKG_CHECK_MODULES([WAYLAND], [wayland-client])
-fi
-PKG_CHECK_MODULES([TIZEN_COMMON], [capi-base-common, dlog])
-PKG_CHECK_MODULES([DAEMON], [wayland-server])
-PKG_CHECK_MODULES(WAYLAND_SCANNER, wayland-scanner)
-
 AC_MSG_CHECKING([whether to build ecore-wayland backend])
 AC_MSG_RESULT([${have_ecore_wayland}])
+
+if test "x${have_efl}" = "xyes"; then
+   if test "x${have_ecore_wayland}" = "xyes"; then
+      PKG_CHECK_MODULES([EFL], [ecore ecore-wayland])
+   else
+      PKG_CHECK_MODULES([EFL], [ecore])
+   fi
+fi
+
+AC_ARG_WITH([tests],
+   [AS_HELP_STRING([--with-tests=none|regular], [choose testing method: regular or none. @<:@default=none@:>@])],
+   [build_tests=${withval}],
+   [build_tests=none])
+
+AC_MSG_CHECKING([whether to build tests for tzsh])
+AC_MSG_RESULT([${build_tests}])
+
+case "${build_tests}" in
+   regular )
+      want_tests="yes"
+      ;;
+   no* )
+      ;;
+   * )
+      AC_MSG_ERROR([Unknown build tests option: --with-tests=${build_tests}])
+      ;;
+esac
+
+if test "x${want_tests}" = "xyes"; then
+   PKG_CHECK_MODULES([DAEMON], [wayland-server])
+fi
+AM_CONDITIONAL([TZSH_BUILD_TESTS], [test "x${want_tests}" = "xyes"])
 
 AC_ARG_ENABLE([build-examples],
    [AS_HELP_STRING([--enable-build-examples], [build examples. @<:@default=disabled@:>@])],

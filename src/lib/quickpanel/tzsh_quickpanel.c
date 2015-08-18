@@ -1,4 +1,4 @@
-#include "tzsh_private.h"
+#include "tzsh_protect.h"
 #include "tzsh_quickpanel.h"
 
 TZSH_USER_BASE_DATA(quickpanel)

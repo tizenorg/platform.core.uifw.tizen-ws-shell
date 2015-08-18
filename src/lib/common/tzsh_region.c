@@ -1,3 +1,4 @@
+#include "tzsh_protect.h"
 #include "tzsh_private.h"
 #include "tzsh_region.h"
 
@@ -15,20 +16,20 @@ tzsh_region_create(tzsh_h tzsh)
 
    if (!tzsh)
      {
-        TZSH_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
+        TZSH_LAST_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
         return NULL;
      }
 
    if (!(tws = tzsh_tws_get(tzsh)))
      {
-        TZSH_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
+        TZSH_LAST_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
         return NULL;
      }
 
    region = calloc(1, sizeof(struct _tzsh_region_s));
    if (!region)
      {
-        TZSH_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
+        TZSH_LAST_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
         return NULL;
      }
 
@@ -37,13 +38,13 @@ tzsh_region_create(tzsh_h tzsh)
    if (!region->res)
      {
         free(region);
-        TZSH_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
+        TZSH_LAST_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
         return NULL;
      }
 
    tzsh_flush(tzsh);
 
-   TZSH_ERR_SUCCESS;
+   TZSH_ERR_SUCCESS_SET;
    return region;
 }
 
@@ -67,6 +68,9 @@ tzsh_region_add(tzsh_region_h region, int x, int y, int w, int h)
    if (!region)
      TZSH_ERR_RET(TZSH_ERROR_INVALID_PARAMETER);
 
+   if ((w < 1) || (h < 1))
+     TZSH_ERR_RET(TZSH_ERROR_INVALID_PARAMETER);
+
    tws_region_add(region->res, x, y, w, h);
 
    tzsh_flush(region->tzsh);
@@ -78,6 +82,9 @@ TZSH_EXPORT int
 tzsh_region_subtract(tzsh_region_h region, int x, int y, int w, int h)
 {
    if (!region)
+     TZSH_ERR_RET(TZSH_ERROR_INVALID_PARAMETER);
+
+   if ((w < 1) || (h < 1))
      TZSH_ERR_RET(TZSH_ERROR_INVALID_PARAMETER);
 
    tws_region_subtract(region->res, x, y, w, h);

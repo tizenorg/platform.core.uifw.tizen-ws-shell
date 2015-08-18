@@ -1,10 +1,11 @@
+#include "tzsh_protect.h"
 #include "tzsh_private.h"
 
-struct _tzsh_service_s
+struct destroy_callback_data
 {
-   tzsh_h tzsh;
-   struct tws_service *tws_service;
-   tzsh_window window;
+   tzsh_service_destroy_cb func;
+   struct wl_list link;
+   void *data;
 };
 
 TZSH_EXPORT tzsh_service_h
@@ -34,6 +35,8 @@ tzsh_service_create(tzsh_h tzsh, tzsh_window window, char *name)
    service->tzsh = tzsh;
    service->window = window;
 
+   wl_list_init(&service->destroy_cb_list);
+
    tzsh_flush(tzsh);
 
    return service;
@@ -42,8 +45,20 @@ tzsh_service_create(tzsh_h tzsh, tzsh_window window, char *name)
 TZSH_EXPORT void
 tzsh_service_destroy(tzsh_service_h service)
 {
+   struct destroy_callback_data *cb_data = NULL, *cb_data_tmp = NULL;
+
    if (!service)
      return;
+
+   if (service->destroy_cb_list.prev)
+     {
+        wl_list_for_each_safe(cb_data, cb_data_tmp, &service->destroy_cb_list, link)
+          {
+             cb_data->func(cb_data->data);
+             wl_list_remove(&cb_data->link);
+             free(cb_data);
+          }
+     }
 
    tws_service_destroy(service->tws_service);
 
@@ -70,4 +85,25 @@ tzsh_service_region_set(tzsh_service_h service, int type, unsigned int angle, tz
    tzsh_flush(service->tzsh);
 
    return 1;
+}
+
+TZSH_EXPORT void
+tzsh_service_destroy_callback_add(tzsh_service_h service, tzsh_service_destroy_cb func, void *data)
+{
+   struct destroy_callback_data *cb_data;
+
+   if (!service)
+     return;
+
+   if (!func)
+     return;
+
+   cb_data = calloc(1, sizeof(struct destroy_callback_data));
+   if (!cb_data)
+     return;
+
+   cb_data->func = func;
+   cb_data->data = data;
+
+   wl_list_insert(service->destroy_cb_list.prev, &cb_data->link);
 }

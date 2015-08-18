@@ -1,20 +1,8 @@
+#include "tzsh_protect.h"
 #include "tzsh_private.h"
-#include "tzsh_efl.h"
 
 typedef struct _Tzsh_Service_Data Tzsh_Service_Data;
 typedef struct _Tzsh_Destroy_Cb_Data Tzsh_Destroy_Cb_Data;
-
-struct _tzsh_s
-{
-   struct wl_display *disp;
-   struct wl_registry *registry;
-   struct wl_list destroy_cb_list;
-   struct wl_list registered_service_list;
-   struct tizen_ws_shell *tws;
-
-   tzsh_toolkit_type_e toolkit_type;
-   unsigned char disp_owned: 1;
-};
 
 struct _Tzsh_Service_Data
 {
@@ -84,12 +72,6 @@ _tizen_ws_shell_cb_service_remove(void *data, struct tizen_ws_shell *tws, const 
      }
 }
 
-static const struct tizen_ws_shell_listener _tizen_ws_shell_listener =
-{
-   _tizen_ws_shell_cb_service_register,
-   _tizen_ws_shell_cb_service_remove
-};
-
 static void
 _tzsh_cb_global(void *data, struct wl_registry *registry, unsigned int id, const char *interface, unsigned int version)
 {
@@ -99,7 +81,6 @@ _tzsh_cb_global(void *data, struct wl_registry *registry, unsigned int id, const
      {
         INF("Bind '%s'", "tizen_ws_shell");
         tzsh->tws = wl_registry_bind(registry, id, &tizen_ws_shell_interface, 1);
-        tizen_ws_shell_add_listener(tzsh->tws, &_tizen_ws_shell_listener, tzsh);
      }
 }
 
@@ -149,13 +130,20 @@ tzsh_destroy_internal(tzsh_h tzsh)
    if (tzsh->registry)
      wl_registry_destroy(tzsh->registry);
 
-   tzsh_flush(tzsh);
-
    if (tzsh->disp_owned)
-     wl_display_disconnect(tzsh->disp);
+     {
+        wl_display_flush(tzsh->disp);
+        wl_display_disconnect(tzsh->disp);
+     }
 
    free(tzsh);
 }
+
+static const struct tizen_ws_shell_listener _tizen_ws_shell_listener =
+{
+   _tizen_ws_shell_cb_service_register,
+   _tizen_ws_shell_cb_service_remove
+};
 
 tzsh_h
 tzsh_create_internal(struct wl_display *display)
@@ -185,6 +173,12 @@ tzsh_create_internal(struct wl_display *display)
      tzsh->disp = display;
 
    tzsh->registry = wl_display_get_registry(tzsh->disp);
+   if (!tzsh->registry)
+     {
+        ERR("failed to get wl_registry");
+        goto err;
+     }
+
    wl_registry_add_listener(tzsh->registry, &_tzsh_registry_listener, tzsh);
 
    // To bind tws interface.
@@ -199,6 +193,8 @@ tzsh_create_internal(struct wl_display *display)
         ERR("Failed to bind tizen window system shell");
         goto err;
      }
+
+   tizen_ws_shell_add_listener(tzsh->tws, &_tizen_ws_shell_listener, tzsh);
 
    // must initialize the registered_serivce_list before invoke 2nd roundtrip.
    // will be used callback.
@@ -333,23 +329,23 @@ tzsh_tws_get(tzsh_h tzsh)
    return tzsh->tws;
 }
 
-TZSH_EXPORT void
+TZSH_EXPORT int
 tzsh_flush(tzsh_h tzsh)
 {
    if (!tzsh)
      {
         ERR("");
-        return;
+        return -1;
      }
 
    if (!tzsh->disp_owned)
      {
         ERR("display is not disp_owned by tzsh.\n"
             "Use wl_display_flush() directly");
-        return;
+        return -1;
      }
 
-   wl_display_flush(tzsh->disp);
+   return wl_display_flush(tzsh->disp);
 }
 
 TZSH_EXPORT tzsh_h
@@ -368,13 +364,13 @@ tzsh_create(tzsh_toolkit_type_e type)
          break;
 
       default:
-         TZSH_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
+         TZSH_LAST_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
          return NULL;
      }
 
    if (!tzsh)
      {
-        TZSH_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
+        TZSH_LAST_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
         return NULL;
      }
 

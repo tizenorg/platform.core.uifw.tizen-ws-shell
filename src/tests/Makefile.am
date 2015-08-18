@@ -19,8 +19,9 @@ AM_CPPFLAGS = \
 
 TESTS = \
    test-init \
+   test-region \
    test-service \
-   test-user
+   test-client
 
 check_PROGRAMS = $(TESTS)
 
@@ -51,13 +52,20 @@ TEST_SHELL_LDADD = $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel.la
 test_init_SOURCES = test-init.c
 test_init_LDADD = $(TEST_COMMON_LDADD)
 
+test_region_SOURCES = test-region.c
+test_region_LDADD = $(TEST_COMMON_LDADD)
+
 test_service_SOURCES = test-service.c
 test_service_LDADD = \
 $(TEST_COMMON_LDADD) \
 $(TEST_SERVICE_LDADD)
+if HAVE_EFL
+test_service_CFLAGS = @EFL_CFLAGS@
+test_service_LDADD += @EFL_LIBS@
+endif
 
-test_user_SOURCES = test-user.c
-test_user_LDADD = \
+test_client_SOURCES = test-client.c
+test_client_LDADD = \
 $(TEST_COMMON_LDADD) \
 $(TEST_SHELL_LDADD)
 

@@ -13,7 +13,6 @@
 extern "C" {
 #endif
 
-
 /**
  * @brief Handle for the tizen shell.
  * @since_tizen 2.4

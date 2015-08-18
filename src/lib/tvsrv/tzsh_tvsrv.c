@@ -29,14 +29,14 @@ tzsh_tvsrv_create(tzsh_h tzsh, tzsh_window win)
 
    if (!tzsh)
      {
-        TZSH_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
+        TZSH_LAST_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
         return NULL;
      }
 
    tws = tzsh_tws_get(tzsh);
    if (!tws)
      {
-        TZSH_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
+        TZSH_LAST_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
         return NULL;
      }
 
@@ -45,7 +45,7 @@ tzsh_tvsrv_create(tzsh_h tzsh, tzsh_window win)
     *   if (!tzsh_service_exist_check(tzsh, "tvsrv"))
     *     {
     *        ERR("*%s* service is NOT EXISTED", "tvsrv");
-    *        TZSH_ERR_SET(TZSH_ERROR_SERVICE_NOT_EXSITED);
+    *        TZSH_LAST_ERR_SET(TZSH_ERROR_SERVICE_NOT_EXSITED);
     *        return NULL;
     *     }
     */
@@ -53,7 +53,7 @@ tzsh_tvsrv_create(tzsh_h tzsh, tzsh_window win)
    tvsrv = calloc(1, sizeof(struct _tzsh_tvsrv_s));
    if (!tvsrv)
      {
-        TZSH_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
+        TZSH_LAST_ERR_SET(TZSH_ERROR_OUT_OF_MEMORY);
         return NULL;
      }
 
@@ -62,7 +62,7 @@ tzsh_tvsrv_create(tzsh_h tzsh, tzsh_window win)
    tvsrv->tzsh = tzsh;
    tzsh_destroy_callback_add(tzsh, _tzsh_tvsrv_cb_destroy, tvsrv);
    tzsh_flush(tzsh);
-   TZSH_ERR_SUCCESS;
+   TZSH_ERR_SUCCESS_SET;
    return tvsrv;
 }
 
