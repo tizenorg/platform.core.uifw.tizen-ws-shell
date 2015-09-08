@@ -292,11 +292,7 @@ tzsh_get_fd(tzsh_h tzsh)
      }
 
    if (!tzsh->disp_owned)
-     {
-        ERR("display is not disp_owned by tzsh.\n"
-            "Use display_get_fd()");
-        return -1;
-     }
+     return -1;
 
    return wl_display_get_fd(tzsh->disp);
 }
@@ -311,11 +307,7 @@ tzsh_dispatch(tzsh_h tzsh)
      }
 
    if (!tzsh->disp_owned)
-     {
-        ERR("display is not disp_owned by tzsh.\n"
-            "Use display_dispatch()");
-        return -1;
-     }
+     return -1;
 
    return wl_display_dispatch(tzsh->disp);
 }
@@ -339,11 +331,7 @@ tzsh_flush(tzsh_h tzsh)
      }
 
    if (!tzsh->disp_owned)
-     {
-        ERR("display is not disp_owned by tzsh.\n"
-            "Use wl_display_flush() directly");
-        return -1;
-     }
+     return -1;
 
    return wl_display_flush(tzsh->disp);
 }
