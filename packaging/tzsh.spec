@@ -6,7 +6,7 @@
 %define with_tests 0
 
 Name:           tzsh
-Version:        0.1.3
+Version:        0.1.4
 Release:        0
 Summary:        Tizen Window System Shell
 License:        MIT
