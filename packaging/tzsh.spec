@@ -82,4 +82,3 @@ rm -rf %{buildroot}
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/%{name}/*
-%{_datadir}/%{name}/*
