@@ -10,6 +10,7 @@ EXTRA_DIST = \
    AUTHORS \
    COPYING \
    COPYING-PLAIN \
+   pc/tzsh-server.pc \
    pc/tzsh-common.pc.in \
    pc/tzsh-call.pc \
    pc/tzsh-call-service.pc \
@@ -24,10 +25,9 @@ EXTRA_DIST = \
    pc/tzsh-tvsrv.pc \
    pc/tzsh-tvsrv-service.pc
 
-dist_pkgdata_DATA = protocol/tzsh.xml
-
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \
+   pc/tzsh-server.pc \
    pc/tzsh-common.pc \
    pc/tzsh-call.pc \
    pc/tzsh-call-service.pc \
