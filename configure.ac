@@ -14,6 +14,7 @@ if test x$wayland_scanner = x; then
 fi
 
 PKG_CHECK_MODULES([WAYLAND], [wayland-client])
+PKG_CHECK_MODULES([WAYLAND_SERVER], [wayland-server])
 PKG_CHECK_MODULES([TIZEN_COMMON], [capi-base-common, dlog])
 PKG_CHECK_MODULES(WAYLAND_SCANNER, wayland-scanner)
 
@@ -90,6 +91,7 @@ fi
 
 AC_CONFIG_FILES([
 Makefile
+pc/tzsh-server.pc
 pc/tzsh-common.pc
 pc/tzsh-call.pc
 pc/tzsh-call-service.pc
