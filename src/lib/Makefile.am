@@ -42,7 +42,9 @@ nodist_common_libtzsh_common_la_SOURCES = \
 
 lib_LTLIBRARIES += common/libtzsh_server.la
 commonlibtzshserverincludedir = $(includedir)/tzsh
-commonlibtzshserverinclude_HEADERS = common/tzsh_server.h
+commonlibtzshserverinclude_HEADERS = \
+      common/tzsh_server_core.h \
+      common/tzsh_server.h
 
 common_libtzsh_server_la_SOURCES = common/tzsh_protocol.c
 common_libtzsh_server_la_CFLAGS = @WAYLAND_SERVER_CFLAGS@
@@ -59,7 +61,7 @@ common/%_protocol.c : $(top_srcdir)/protocol/%.xml
 	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(wayland_scanner) code < $< > $@
 common/%_protocol.h : $(top_srcdir)/protocol/%.xml
 	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(wayland_scanner) client-header < $< > $@
-common/%_server.h : $(top_srcdir)/protocol/%.xml
+common/%_server_core.h : $(top_srcdir)/protocol/%.xml
 	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(wayland_scanner) server-header < $< > $@
 
 include Makefile_Call.am
