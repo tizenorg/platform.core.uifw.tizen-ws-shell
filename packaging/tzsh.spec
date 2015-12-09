@@ -47,11 +47,17 @@ export CFLAGS+=" -fvisibility=hidden -fPIC -Werror-implicit-function-declaration
 export LDFLAGS+=" -fvisibility=hidden -Wl,--hash-style=both -Wl,--as-needed"
 
 %if "%{enable_examples}" == "1"
-%autogen --enable-build-examples
-%else if "%{with_tests}" == "1"
-%autogen --with-tests=regular
+   %if "%{with_tests}" == "1"
+      %autogen --enable-build-examples --with-tests=regular
+   %else
+      %autogen --enable-build-examples
+   %endif
 %else
-%autogen
+   %if "%{with_tests}" == "1"
+      %autogen --with-tests=regular
+   %else
+      %autogen
+   %endif
 %endif
 make %{?jobs:-j%jobs}
 

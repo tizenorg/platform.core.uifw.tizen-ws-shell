@@ -23,10 +23,10 @@ struct _tzsh_s
 tzsh_h         tzsh_create_internal(struct wl_display *display);
 void           tzsh_destroy_internal(tzsh_h tzsh);
 
-#ifdef HAVE_EFL
+#ifdef HAVE_ECORE
 tzsh_h         tzsh_efl_create(void);
 void           tzsh_efl_destroy(tzsh_h tzsh);
-#else // !HAVE_EFL
+#else // !HAVE_ECORE
 static inline tzsh_h
 tzsh_efl_create(void)
 {
@@ -38,6 +38,6 @@ static inline void
 tzsh_efl_destroy(tzsh_h tzsh)
 {
 }
-#endif // HAVE_EFL
+#endif // HAVE_ECORE
 
 #endif

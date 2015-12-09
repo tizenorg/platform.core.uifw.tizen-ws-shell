@@ -20,15 +20,15 @@ PKG_CHECK_MODULES(WAYLAND_SCANNER, wayland-scanner)
 
 PKG_CHECK_EXISTS([ecore],
                  [
-                  AC_DEFINE([HAVE_EFL], [1], [ecore support for tzsh])
-                  have_efl="yes"
+                  AC_DEFINE([HAVE_ECORE], [1], [ecore support for tzsh])
+                  have_ecore="yes"
                   requirement_tzsh_pc="ecore"
                  ],
-                 [have_efl="no"])
-AM_CONDITIONAL([HAVE_EFL], [test "x${have_efl}" = "xyes"])
+                 [have_ecore="no"])
+AM_CONDITIONAL([HAVE_ECORE], [test "x${have_ecore}" = "xyes"])
 
 AC_MSG_CHECKING([whether to build efl for tzsh])
-AC_MSG_RESULT([${have_efl}])
+AC_MSG_RESULT([${have_ecore}])
 
 PKG_CHECK_EXISTS([ecore-wayland],
                  [
@@ -41,11 +41,11 @@ PKG_CHECK_EXISTS([ecore-wayland],
 AC_MSG_CHECKING([whether to build ecore-wayland backend])
 AC_MSG_RESULT([${have_ecore_wayland}])
 
-if test "x${have_efl}" = "xyes"; then
+if test "x${have_ecore}" = "xyes"; then
    if test "x${have_ecore_wayland}" = "xyes"; then
-      PKG_CHECK_MODULES([EFL], [ecore ecore-wayland])
+      PKG_CHECK_MODULES([ECORE], [ecore ecore-wayland])
    else
-      PKG_CHECK_MODULES([EFL], [ecore])
+      PKG_CHECK_MODULES([ECORE], [ecore])
    fi
 fi
 
@@ -83,10 +83,14 @@ AC_ARG_ENABLE([build-examples],
     fi
    ],
    [want_build_examples="no"])
+
 AM_CONDITIONAL([BUILD_EXAMPLES], [test "${want_build_examples}" = "yes"])
 
+AC_MSG_CHECKING([whether to build examples for tzsh])
+AC_MSG_RESULT([${want_build_examples}])
+
 if test "${want_build_examples}" = "yes"; then
-   PKG_CHECK_MODULES([EFL], [evas elementary])
+   PKG_CHECK_MODULES([ELEMENTARY], [evas elementary])
 fi
 
 AC_CONFIG_FILES([

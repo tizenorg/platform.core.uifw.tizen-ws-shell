@@ -59,9 +59,9 @@ test_service_SOURCES = test-service.c
 test_service_LDADD = \
 $(TEST_COMMON_LDADD) \
 $(TEST_SERVICE_LDADD)
-if HAVE_EFL
-test_service_CFLAGS = @EFL_CFLAGS@
-test_service_LDADD += @EFL_LIBS@
+if HAVE_ECORE
+test_service_CFLAGS = @ECORE_CFLAGS@
+test_service_LDADD += @ECORE_LIBS@
 endif
 
 test_client_SOURCES = test-client.c

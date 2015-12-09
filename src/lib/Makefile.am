@@ -24,10 +24,10 @@ common_libtzsh_common_la_SOURCES = \
 common_libtzsh_common_la_LDFLAGS = -export-dynamic
 common_libtzsh_common_la_CFLAGS = $(AM_CPPFLAGS)
 common_libtzsh_common_la_LIBADD = @WAYLAND_LIBS@ @TIZEN_COMMON_LIBS@
-if HAVE_EFL
+if HAVE_ECORE
 common_libtzsh_common_la_SOURCES += common/tzsh_efl.c
-common_libtzsh_common_la_CFLAGS += $(EFL_CFLAGS)
-common_libtzsh_common_la_LIBADD += $(EFL_LIBS)
+common_libtzsh_common_la_CFLAGS += $(ECORE_CFLAGS)
+common_libtzsh_common_la_LIBADD += $(ECORE_LIBS)
 endif
 
 commonlibtzshcommonincludedir = $(includedir)/tzsh

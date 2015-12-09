@@ -13,7 +13,7 @@ AM_CPPFLAGS = \
    -I$(top_builddir)/src/lib/volume/ \
    -I$(top_builddir)/src/lib/call/ \
    -I$(top_builddir)/src/lib/tvsrv/ \
-   @EFL_CFLAGS@
+   @ELEMENTARY_CFLAGS@
 
 bin_PROGRAMS = \
 quickpanel-service \
@@ -26,26 +26,26 @@ quickpanel_service_CFLAGS = $(AM_CFALGS)
 quickpanel_service_LDADD = \
    $(top_builddir)/src/lib/common/libtzsh_common.la \
    $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel_service.la \
-   @EFL_LIBS@
+   @ELEMENTARY_LIBS@
 
 quickpanel_client_SOURCES = quickpanel-client.c
 quickpanel_client_CFLAGS = $(AM_CFALGS)
 quickpanel_client_LDADD = \
    $(top_builddir)/src/lib/common/libtzsh_common.la \
    $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel.la \
-   @EFL_LIBS@
+   @ELEMENTARY_LIBS@
 
 tvsrv_service_SOURCES = tvsrv-service.c
 tvsrv_service_CFLAGS = $(AM_CFALGS)
 tvsrv_service_LDADD = \
    $(top_builddir)/src/lib/common/libtzsh_common.la \
    $(top_builddir)/src/lib/tvsrv/libtzsh_tvsrv_service.la \
-   @EFL_LIBS@
+   @ELEMENTARY_LIBS@
 
 tvsrv_client_SOURCES = tvsrv-client.c
 tvsrv_client_CFLAGS = $(AM_CFALGS)
 tvsrv_client_LDADD = \
    $(top_builddir)/src/lib/common/libtzsh_common.la \
    $(top_builddir)/src/lib/tvsrv/libtzsh_tvsrv.la \
-   @EFL_LIBS@
+   @ELEMENTARY_LIBS@
 
