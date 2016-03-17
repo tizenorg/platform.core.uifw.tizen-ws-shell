@@ -65,7 +65,10 @@ _tzsh_efl_cb_idle_enterer(void *data)
 err:
    if ((ret < 0) && ((errno != EAGAIN) && (errno != EINVAL)))
      {
-        ERR("wayland socket error: %s", strerror(errno));
+        int _errno = errno;
+        char buffer[1024];
+        strerror_r(_errno, buffer, sizeof(buffer));
+        ERR("wayland socket error:(%d) %s", _errno, buffer);
         return ECORE_CALLBACK_CANCEL;
      }
 
