@@ -41,6 +41,7 @@ service_win_test(tzsh_h tzsh)
      }
 
    tvsrv_service = tzsh_tvsrv_service_create(tzsh, tz_win);
+   fprintf(stdout, "tvsrv_service:%p\n", tvsrv_service);
 }
 
 

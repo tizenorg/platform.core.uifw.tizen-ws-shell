@@ -12,7 +12,7 @@
       <description summary="destroy tizen_ws_shell"/>
     </request>
 
-    <request name="service_create" version="1">
+    <request name="service_create">
       <description summary="create new service">
       </description>
       <arg name="id" type="new_id" interface="tws_service"/>
@@ -41,14 +41,14 @@
 
     <!-- The below protocols are provided to users for Tizen WS service.
          Please insert from here additional protocol for users -->
-    <request name="quickpanel_get" version="1">
+    <request name="quickpanel_get">
       <description summary="get the handle of quickpanel service">
       </description>
       <arg name="id" type="new_id" interface="tws_quickpanel"/>
       <arg name="win" type="uint"/>
     </request>
 
-    <request name="tvsrv_get" version="1">
+    <request name="tvsrv_get">
       <description summary="get the handle of tvsrv service">
       </description>
       <arg name="id" type="new_id" interface="tws_tvsrv"/>
@@ -111,14 +111,14 @@
       </description>
     </request>
 
-    <request name="bind" version="1">
+    <request name="bind">
       <description summary="request for binding with tv service window">
         Request for binding with tv service window, user window can set
         tv service window as transient-for window through this request.
       </description>
     </request>
 
-    <request name="unbind" version="1">
+    <request name="unbind">
       <description summary="request for unbinding with tv service window">
         Request for un-binding with tv service window, user window can unset
         transient-for relation with tv service window through this request.
@@ -189,6 +189,14 @@
     <request name="quickpanel_get">
       <arg name="id" type="new_id" interface="tws_service_quickpanel"/>
     </request>
+
+    <request name="screensaver_manager_get">
+      <arg name="id" type="new_id" interface="tws_service_screensaver_manager"/>
+    </request>
+
+    <request name="screensaver_get">
+      <arg name="id" type="new_id" interface="tws_service_screensaver"/>
+    </request>
   </interface>
 
   <interface name="tws_service_indicator" version="1">
@@ -214,6 +222,42 @@
 
     <request name="msg_send">
       <arg name="msg" type="uint"/>
+    </request>
+  </interface>
+
+  <interface name="tws_service_screensaver_manager" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+    <request name="idle_time_set">
+      <description summary="set idle time">
+        The idle time specifies the number of milliseconds since the last input was received
+        from the user on any of the input devices.
+      </description>
+      <arg name="id" type="uint"/>
+    </request>
+    <event name="idle">
+      <description summary="">
+      </description>
+    </event>
+    <event name="active">
+      <description summary="">
+      </description>
+    </event>
+  </interface>
+
+  <interface name="tws_service_screensaver" version="1">
+     <description summary="interface for screensaver application">
+       This interface provides protocol to set the screensaver surface type.
+       Only one surface can bind this interface at a time. The screensaver surface
+       can be shown after a user-settable period of inactivity which is specified by
+       screensaver manager service.
+    </description>
+    <enum name="error">
+      <entry name="request_rejected" value="0" summary="given reuqest is denied"/>
+    </enum>
+    <request name="release" type="destructor">
+      <description summary="release the handle of tws_service_screensaver">
+      </description>
     </request>
   </interface>
 

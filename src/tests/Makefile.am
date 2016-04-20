@@ -8,6 +8,7 @@ AM_CPPFLAGS = \
    -I$(top_srcdir)/src/lib/call/ \
    -I$(top_srcdir)/src/lib/indicator \
    -I$(top_srcdir)/src/lib/tvsrv \
+   -I$(top_srcdir)/src/lib/screensaver \
    -I$(top_builddir)/src/lib/ \
    -I$(top_builddir)/src/lib/quickpanel/ \
    -I$(top_builddir)/src/lib/lockscreen/ \
@@ -15,6 +16,7 @@ AM_CPPFLAGS = \
    -I$(top_builddir)/src/lib/call/ \
    -I$(top_builddir)/src/lib/indicator \
    -I$(top_builddir)/src/lib/tvsrv \
+   -I$(top_builddir)/src/lib/screensaver \
    @DAEMON_CFLAGS@
 
 TESTS = \
@@ -45,7 +47,9 @@ $(top_builddir)/src/lib/volume/libtzsh_volume_service.la \
 $(top_builddir)/src/lib/lockscreen/libtzsh_lockscreen_service.la \
 $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel_service.la \
 $(top_builddir)/src/lib/indicator/libtzsh_indicator_service.la \
-$(top_builddir)/src/lib/tvsrv/libtzsh_tvsrv_service.la
+$(top_builddir)/src/lib/tvsrv/libtzsh_tvsrv_service.la \
+$(top_builddir)/src/lib/screensaver/libtzsh_screensaver_manager_service.la \
+$(top_builddir)/src/lib/screensaver/libtzsh_screensaver_service.la
 
 TEST_SHELL_LDADD = $(top_builddir)/src/lib/quickpanel/libtzsh_quickpanel.la
 
