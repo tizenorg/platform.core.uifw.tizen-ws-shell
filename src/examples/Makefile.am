@@ -13,13 +13,16 @@ AM_CPPFLAGS = \
    -I$(top_builddir)/src/lib/volume/ \
    -I$(top_builddir)/src/lib/call/ \
    -I$(top_builddir)/src/lib/tvsrv/ \
+   -I$(top_builddir)/src/lib/screensaver/ \
    @ELEMENTARY_CFLAGS@
 
 bin_PROGRAMS = \
 quickpanel-service \
 quickpanel-client \
 tvsrv-service \
-tvsrv-client
+tvsrv-client \
+screensaver-server \
+screensaver-client
 
 quickpanel_service_SOURCES = quickpanel-service.c
 quickpanel_service_CFLAGS = $(AM_CFALGS)
@@ -49,3 +52,16 @@ tvsrv_client_LDADD = \
    $(top_builddir)/src/lib/tvsrv/libtzsh_tvsrv.la \
    @ELEMENTARY_LIBS@
 
+screensaver_service_SOURCES = screensaver-service.c
+screensaver_service_CFLAGS = $(AM_CFALGS)
+screensaver_service_LDADD = \
+   $(top_builddir)/src/lib/common/libtzsh_common.la \
+   $(top_builddir)/src/lib/screensaver/libtzsh_screensaver_service.la \
+   @ELEMENTARY_LIBS@
+
+screensaver_client_SOURCES = screensaver-client.c
+screensaver_client_CFLAGS = $(AM_CFALGS)
+screensaver_client_LDADD = \
+   $(top_builddir)/src/lib/common/libtzsh_common.la \
+   $(top_builddir)/src/lib/screensaver/libtzsh_screensaver.la \
+   @ELEMENTARY_LIBS@

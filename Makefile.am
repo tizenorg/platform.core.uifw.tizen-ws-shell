@@ -23,7 +23,9 @@ EXTRA_DIST = \
    pc/tzsh-quickpanel.pc \
    pc/tzsh-quickpanel-service.pc \
    pc/tzsh-tvsrv.pc \
-   pc/tzsh-tvsrv-service.pc
+   pc/tzsh-tvsrv-service.pc \
+   pc/tzsh-screensaver.pc \
+   pc/tzsh-screensaver-service.pc
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \
@@ -40,6 +42,8 @@ pkgconfig_DATA = \
    pc/tzsh-quickpanel.pc \
    pc/tzsh-quickpanel-service.pc \
    pc/tzsh-tvsrv.pc \
-   pc/tzsh-tvsrv-service.pc
+   pc/tzsh-tvsrv-service.pc \
+   pc/tzsh-screensaver.pc \
+   pc/tzsh-screensaver-service.pc
 
 SUBDIRS = src

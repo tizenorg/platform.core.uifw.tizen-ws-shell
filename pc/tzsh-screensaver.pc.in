@@ -1,0 +1,11 @@
+prefix=@prefix@
+libdir=@libdir@
+includedir=@includedir@
+datadir=@datadir@
+pkgdatadir=@datadir@/tzsh
+
+Name: tzsh
+Description: Support to handle the Screensaver Client in Tizen Window System.
+Version: @VERSION@
+Libs: -L${libdir} -ltzsh_common -ltzsh_screensaver
+Cflags: -I${includedir}/tzsh

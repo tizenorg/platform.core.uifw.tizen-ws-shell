@@ -54,6 +54,13 @@
       <arg name="id" type="new_id" interface="tws_tvsrv"/>
       <arg name="win" type="uint"/>
     </request>
+
+    <request name="screensaver_get" version="1">
+      <description summary="get the handle of screensaver service">
+      </description>
+      <arg name="id" type="new_id" interface="tws_screensaver"/>
+      <arg name="win" type="uint"/>
+    </request>
     <!-- The end of protocols for users -->
 
   </interface>
@@ -127,6 +134,22 @@
 
   </interface>
 
+  <interface name="tws_screensaver" version="1">
+     <description summary="interface for screensaver application">
+       This interface provides protocol to set the screensaver surface type.
+       Only one surface can bind this interface at a time. The screensaver surface
+       can be shown after a user-settable period of inactivity which is specified by
+       screensaver service.
+    </description>
+    <enum name="error">
+      <entry name="request_rejected" value="0" summary="given reuqest is denied"/>
+    </enum>
+    <request name="release" type="destructor">
+      <description summary="release the handle of tws_screensaver">
+      </description>
+    </request>
+  </interface>
+
   <interface name="tws_region" version="1">
     <description summary="region interface">
       A region object describes an area.
@@ -189,6 +212,10 @@
     <request name="quickpanel_get">
       <arg name="id" type="new_id" interface="tws_service_quickpanel"/>
     </request>
+
+    <request name="screensaver_get">
+      <arg name="id" type="new_id" interface="tws_service_screensaver"/>
+    </request>
   </interface>
 
   <interface name="tws_service_indicator" version="1">
@@ -215,6 +242,26 @@
     <request name="msg_send">
       <arg name="msg" type="uint"/>
     </request>
+  </interface>
+
+  <interface name="tws_service_screensaver" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+    <request name="idle_time_set">
+      <description summary="set idle time">
+        The idle time specifies the number of milliseconds since the last input was received
+        from the user on any of the input devices.
+      </description>
+      <arg name="id" type="uint"/>
+    </request>
+    <event name="idle">
+      <description summary="">
+      </description>
+    </event>
+    <event name="active">
+      <description summary="">
+      </description>
+    </event>
   </interface>
 
 </protocol>
