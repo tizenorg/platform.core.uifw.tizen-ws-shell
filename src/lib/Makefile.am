@@ -12,6 +12,7 @@ AM_CPPFLAGS = \
 -I./quickpanel \
 -I./indicator \
 -I./tvsrv \
+-I./screensaver \
 @WAYLAND_CFLAGS@ \
 @TIZEN_COMMON_CFLAGS@
 
@@ -70,3 +71,4 @@ include Makefile_Lockscreen.am
 include Makefile_Quickpanel.am
 include Makefile_Indicator.am
 include Makefile_Tvsrv.am
+include Makefile_Screensaver.am

@@ -1,0 +1,14 @@
+lib_LTLIBRARIES += screensaver/libtzsh_screensaver_service.la
+screensaver_libtzsh_screensaver_service_la_SOURCES = screensaver/tzsh_screensaver_service.c
+screensaver_libtzsh_screensaver_service_la_CFLAGS = $(AM_CPPFLAGS)
+screensaver_libtzsh_screensaver_service_la_LIBADD = common/libtzsh_common.la
+libtzshscreensaverserviceincludedir = $(includedir)/tzsh
+libtzshscreensaverserviceinclude_HEADERS = screensaver/tzsh_screensaver_service.h
+
+lib_LTLIBRARIES += screensaver/libtzsh_screensaver_manager_service.la
+screensaver_libtzsh_screensaver_manager_service_la_SOURCES = screensaver/tzsh_screensaver_manager_service.c
+screensaver_libtzsh_screensaver_manager_service_la_CFLAGS = $(AM_CPPFLAGS)
+screensaver_libtzsh_screensaver_manager_service_la_LIBADD = common/libtzsh_common.la
+libtzshscreensavermanagerserviceincludedir = $(includedir)/tzsh
+libtzshscreensavermanagerserviceinclude_HEADERS = screensaver/tzsh_screensaver_manager_service.h
+
