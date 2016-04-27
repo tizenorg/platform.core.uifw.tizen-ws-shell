@@ -56,6 +56,17 @@ int tzsh_tvsrv_destroy(tzsh_tvsrv_h tvsrv);
  */
 int tzsh_tvsrv_bind(tzsh_tvsrv_h tvsrv);
 
+/**
+ * @brief Requests to unbind with the tvsrv service window.
+ * @since_tizen 3.0
+ * @param[in] tvsrv The #tzsh_tvsrv_h object
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ * @retval #TZSH_ERROR_SERVICE_NOT_EXSITED No such service
+ */
+int tzsh_tvsrv_unbind(tzsh_tvsrv_h tvsrv);
+
 #ifdef  __cplusplus
 }
 #endif
