@@ -81,7 +81,7 @@ int tzsh_quickpanel_hide(tzsh_quickpanel_h quickpanel);
 int tzsh_quickpanel_enable(tzsh_quickpanel_h quickpanel);
 
 /**
- * @brief Requests not to be able to show or hide the quickpanel service window.
+ * @brief Requests not to be able to show the quickpanel service window.
  * @details This API is useful if the application does not need to show the quickpanel service window.
  *          If the application call this API, the quickpanel service window cannot be shown on the screen
  *          as long as the window is shown.
