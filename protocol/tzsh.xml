@@ -94,6 +94,42 @@
       <description summary="disable the operation of quickpanel on user window">
       </description>
     </request>
+
+    <enum name="state_type">
+      <entry name="unknown" value="0"/>
+      <entry name="visibility" value="1"/>
+      <entry name="scrollable" value="2"/>
+      <entry name="orientation" value="3"/>
+    </enum>
+
+    <enum name="state_value">
+      <entry name="unknown" value="0"/>
+      <entry name="visible_show" value="1"/>
+      <entry name="visible_hide" value="2"/>
+      <entry name="scrollable_set" value="3"/>
+      <entry name="scrollable_unset" value="4"/>
+      <entry name="orientation_0" value="5"/>
+      <entry name="orientation_90" value="6"/>
+      <entry name="orientation_180" value="7"/>
+      <entry name="orientation_270" value="8"/>
+    </enum>
+
+    <request name="state_get">
+      <description summary="gets the state of the quickpanel">
+      <arg name="type" type="int"/>
+      </description>
+    </request>
+
+    <event name="state_get_done">
+      <arg name="type" type="int"/>
+      <arg name="value" type="int"/>
+      <arg name="error_state" type="uint"/>
+    </event>
+
+    <event name="state_changed">
+      <arg name="states" type="array" summary="array of state_type and state_value"/>
+    </event>
+
   </interface>
 
   <interface name="tws_tvsrv" version="1">

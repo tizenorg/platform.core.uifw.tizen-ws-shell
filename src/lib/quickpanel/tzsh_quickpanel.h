@@ -19,22 +19,29 @@ extern "C" {
 typedef struct _tzsh_quickpanel_s * tzsh_quickpanel_h;
 
 /**
- * @brief Handle for state changed event for the quickpanel.
+ * @brief Handle for the event handler of quickpanel.
  * @since_tizen 3.0
  */
-typedef struct _tzsh_quickpanel_event_s *tzsh_quickpanel_event_h;
+typedef struct _tzsh_quickpanel_event_handler_s *tzsh_quickpanel_event_handler_h;
 
 /**
- * @brief Enumeration for scrollable state of quickpanel.
+ * @brief Handle for the event information handler of quickpanel.
+ * @since_tizen 3.0
+ */
+typedef struct _tzsh_quickpanel_event_info_s *tzsh_quickpanel_event_info_h;
+
+/**
+ * @brief Enumeration for event type of quickpanel.
  * @since_tizen 3.0
  */
 typedef enum
 {
-   TZSH_QUICKPANEL_SCROLLABLE_STATE_UNKNOWN = 0x0, /**< Unknown state. */
-   TZSH_QUICKPANEL_SCROLLABLE_STATE_SET = 0x1, /**< Scrollable state. */
-   TZSH_QUICKPANEL_SCROLLABLE_STATE_UNSET = 0x2, /**< Not scrollable state. */
-   TZSH_QUICKPANEL_SCROLLABLE_STATE_MAX = 0xFFFFFFFF /**< Maximum value of quickpanel scrollable state. */
-} tzsh_quickpanel_scrollable_state_e;
+   TZSH_QUICKPANEL_EVENT_TYPE_UNKNOWN = 0x0, /**< Unknown event type. */
+   TZSH_QUICKPANEL_EVENT_TYPE_VISIBILITY = 0x1, /**< Visibility event type. */
+   TZSH_QUICKPANEL_EVENT_TYPE_SCROLLABLE = 0x2, /**< Scrollable event type. */
+   TZSH_QUICKPANEL_EVENT_TYPE_ORIENTATION = 0x3, /**< Orientation event type. */
+   TZSH_QUICKPANEL_EVENT_TYPE_MAX = 0xFFFFFFFF /**< Maximum value of quickpanel event type. */
+} tzsh_quickpanel_event_type_e;
 
 /**
  * @brief Enumeration for visible state of quickpanel.
@@ -42,11 +49,23 @@ typedef enum
  */
 typedef enum
 {
-   TZSH_QUICKPANEL_VISIBLE_STATE_UNKNOWN = 0x0, /**< Unknown state. */
-   TZSH_QUICKPANEL_VISIBLE_STATE_SHOW = 0x1, /**< Show state. */
-   TZSH_QUICKPANEL_VISIBLE_STATE_HIDE = 0x2, /**< Hide state. */
-   TZSH_QUICKPANEL_VISIBLE_STATE_MAX = 0xFFFFFFFF /**< Maximum value of quickpanel visible state. */
-} tzsh_quickpanel_visible_state_e;
+   TZSH_QUICKPANEL_STATE_VISIBLE_UNKNOWN = 0x0, /**< Unknown state. */
+   TZSH_QUICKPANEL_STATE_VISIBLE_SHOW = 0x1, /**< Show state. */
+   TZSH_QUICKPANEL_STATE_VISIBLE_HIDE = 0x2, /**< Hide state. */
+   TZSH_QUICKPANEL_STATE_VISIBLE_MAX = 0xFFFFFFFF /**< Maximum value of quickpanel visible state. */
+} tzsh_quickpanel_state_visible_e;
+
+/**
+ * @brief Enumeration for scrollable state of quickpanel.
+ * @since_tizen 3.0
+ */
+typedef enum
+{
+   TZSH_QUICKPANEL_STATE_SCROLLABLE_UNKNOWN = 0x0, /**< Unknown state. */
+   TZSH_QUICKPANEL_STATE_SCROLLABLE_SET = 0x1, /**< Scrollable state. */
+   TZSH_QUICKPANEL_STATE_SCROLLABLE_UNSET = 0x2, /**< Not scrollable state. */
+   TZSH_QUICKPANEL_STATE_SCROLLABLE_MAX = 0xFFFFFFFF /**< Maximum value of quickpanel scrollable state. */
+} tzsh_quickpanel_state_scrollable_e;
 
 /**
  * @brief Enumeration for orientation state of quickpanel.
@@ -54,19 +73,23 @@ typedef enum
  */
 typedef enum
 {
-   TZSH_QUICKPANEL_ORIENTATION_STATE_UNKNOWN = 0x0, /**< Unknown state. */
-   TZSH_QUICKPANEL_ORIENTATION_STATE_0 = 0x1, /**< 0 */
-   TZSH_QUICKPANEL_ORIENTATION_STATE_90 = 0x2, /**< 90 */
-   TZSH_QUICKPANEL_ORIENTATION_STATE_180 = 0x4, /**< 180 */
-   TZSH_QUICKPANEL_ORIENTATION_STATE_270 = 0x8, /**< 270 */
-   TZSH_QUICKPANEL_ORIENTATION_STATE_MAX = 0xFFFFFFFF /**< Maximum value of quickpanel visible state. */
-} tzsh_quickpanel_orientation_state_e;
+   TZSH_QUICKPANEL_STATE_ORIENTATION_UNKNOWN = 0x0, /**< Unknown state. */
+   TZSH_QUICKPANEL_STATE_ORIENTATION_0 = 0x1, /**< 0 */
+   TZSH_QUICKPANEL_STATE_ORIENTATION_90 = 0x2, /**< 90 */
+   TZSH_QUICKPANEL_STATE_ORIENTATION_180 = 0x3, /**< 180 */
+   TZSH_QUICKPANEL_STATE_ORIENTATION_270 = 0x4, /**< 270 */
+   TZSH_QUICKPANEL_STATE_ORIENTATION_MAX = 0xFFFFFFFF /**< Maximum value of quickpanel visible state. */
+} tzsh_quickpanel_state_orientation_e;
 
 /**
- * @brief Handle for the callback function of quickpanel.
+ * @brief The event callback function of quickpanel.
  * @since_tizen 3.0
+ * @remarks A callback used by the application to handle events of a specified
+ * type. The event_info handle is only valid as long as the callback function
+ * is not returned. When the callback is returned, event_info handle is not valid
+ * nad should not be used.
  */
-typedef void (*tzsh_quickpanel_cb)(void *data, tzsh_quickpanel_h quickpanel, tzsh_quickpanel_h event);
+typedef void (*tzsh_quickpanel_event_cb)(tzsh_quickpanel_event_info_h event_info, void *data);
 
 /**
  * @brief Creates the #tzsh_quickpanel_h object which handles the quickpanel service.
@@ -127,7 +150,7 @@ int tzsh_quickpanel_hide(tzsh_quickpanel_h quickpanel);
  * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval #TZSH_ERROR_SERVICE_NOT_EXSITED No such service
  */
-int tzsh_quickpanel_visible_get(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_visible_state_e *visible);
+int tzsh_quickpanel_visible_get(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_state_visible_e *visible);
 
 /**
  * @deprecated Deprecated since 3.0. Renamed to tzsh_quickpanel_scrollable_set().
@@ -190,7 +213,7 @@ int tzsh_quickpanel_scrollable_unset(tzsh_quickpanel_h quickpanel);
  * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval #TZSH_ERROR_SERVICE_NOT_EXSITED No such service
  */
-int tzsh_quickpanel_scrollable_get(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_scrollable_state_e *scrollable);
+int tzsh_quickpanel_scrollable_get(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_state_scrollable_e *scrollable);
 
 /**
  * @brief Gets the orientation of the quickpanel.
@@ -202,29 +225,76 @@ int tzsh_quickpanel_scrollable_get(tzsh_quickpanel_h quickpanel, tzsh_quickpanel
  * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval #TZSH_ERROR_SERVICE_NOT_EXSITED No such service
  */
-int tzsh_quickpanel_orientation_get(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_orientation_state_e *orientation);
+int tzsh_quickpanel_orientation_get(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_state_orientation_e *orientation);
 
 /**
  * @brief Sets the callback function to be called when the quickpanel state is changed.
  * @since_tizen 3.0
  * @param[in] quickpanel The #tzsh_quickpanel_h object
- * @param[in] cb_func The callback function to be called
+ * @param[out] event_handler The #tzsh_quickpanel_event_handler_h object
+ * @param[in] event_type The event type
+ * @param[in] callback The callback function to be called
  * @param[in] data The data associated to the callback function
  * @return @c 0 on success, otherwise a negative error value
  * @retval #TZSH_ERROR_NONE Successful
  * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
  */
-int tzsh_quickpanel_state_change_cb_set(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_cb cb_func, void *data);
+int tzsh_quickpanel_event_handler_add(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_event_handler_h *event_handler, tzsh_quickpanel_event_type_e event_type, tzsh_quickpanel_event_cb callback, void *data);
 
 /**
  * @brief Removes the registered event callback function.
  * @since_tizen 3.0
  * @param[in] quickpanel The #tzsh_quickpanel_h object
+ * @param[in] event_handler The #tzsh_quickpanel_event_handler_h object
  * @return @c 0 on success, otherwise a negative error value
  * @retval #TZSH_ERROR_NONE Successful
  * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
  */
-int tzsh_quickpanel_state_change_cb_unset(tzsh_quickpanel_h quickpanel);
+int tzsh_quickpanel_event_handler_del(tzsh_quickpanel_h quickpanel, tzsh_quickpanel_event_handler_h event_handler);
+
+/**
+ * @brief Gets the event type.
+ * @since_tizen 3.0
+ * @param[in] event_info The #tzsh_quickpanel_event_info_h object
+ * @param[out] event_type The #tzsh_quickpanel_event_type_e object
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ */
+int tzsh_quickpanel_event_type_get(tzsh_quickpanel_event_info_h event_info, tzsh_quickpanel_event_type_e *event_type);
+
+/**
+ * @brief Gets the visible state from given event info.
+ * @since_tizen 3.0
+ * @param[in] event_info The #tzsh_quickpanel_event_info_h object
+ * @param[out] state The visible state of quickpanel
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ */
+int tzsh_quickpanel_event_visible_get(tzsh_quickpanel_event_info_h event_info, tzsh_quickpanel_state_visible_e *state);
+
+/**
+ * @brief Gets the scrollable state from given event info.
+ * @since_tizen 3.0
+ * @param[in] event_info The #tzsh_quickpanel_event_info_h object
+ * @param[out] state The scrollable state of quickpanel
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ */
+int tzsh_quickpanel_event_scrollable_get(tzsh_quickpanel_event_info_h event_info, tzsh_quickpanel_state_scrollable_e *state);
+
+/**
+ * @brief Gets the orientation state from given event info.
+ * @since_tizen 3.0
+ * @param[in] event_info The #tzsh_quickpanel_event_info_h object
+ * @param[out] state The orientation state of quickpanel
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ */
+int tzsh_quickpanel_event_orientation_get(tzsh_quickpanel_event_info_h event_info, tzsh_quickpanel_state_orientation_e *state);
 
 #ifdef  __cplusplus
 }
