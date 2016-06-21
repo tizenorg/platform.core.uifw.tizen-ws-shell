@@ -44,6 +44,7 @@ do {                                            \
       tzsh_h tzsh;                                                         \
       tzsh_window win;                                                     \
       struct tws_##name *res;                                              \
+      void *private_data;                                                  \
    };
 
 #define TZSH_USER_BASE_IMPL(name)                                          \
@@ -163,6 +164,7 @@ struct tizen_ws_shell   *tzsh_tws_get(tzsh_h tzsh);
 struct tws_region       *tzsh_tws_region_get(tzsh_region_h region);
 
 int            tzsh_flush(tzsh_h tzsh);
+int            tzsh_dispatch(tzsh_h tzsh);
 bool           tzsh_service_exist_check(tzsh_h tzsh, const char *name);
 void           tzsh_destroy_callback_add(tzsh_h tzsh, tzsh_destroy_cb func, void *data);
 void           tzsh_destroy_callback_remove(tzsh_h tzsh, tzsh_destroy_cb func, void *data);
