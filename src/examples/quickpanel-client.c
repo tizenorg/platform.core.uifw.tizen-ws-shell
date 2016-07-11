@@ -85,10 +85,27 @@ _cb_orientation_changed(tzsh_quickpanel_event_info_h ev_info, void *data)
            __func__, __LINE__, curr);
 }
 
+static void
+_check_changed_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+{
+   static Eina_Bool set = EINA_FALSE;
+
+   if (!qp)
+     return;
+
+   if (set)
+     tzsh_quickpanel_scrollable_set(qp);
+   else
+     tzsh_quickpanel_scrollable_unset(qp);
+
+   set = !set;
+}
+
 static Evas_Object *
 _create_and_show_window(const char *name, Eina_Bool alpha)
 {
    Evas_Object *win, *bg;
+   Evas_Object *box, *ck;
 
    win = elm_win_util_standard_add(name , name);
    elm_win_autodel_set(win, EINA_TRUE);
@@ -99,6 +116,20 @@ _create_and_show_window(const char *name, Eina_Bool alpha)
    evas_object_color_set(bg, 255, 255, 0, 255);
    elm_win_resize_object_add(win, bg);
    evas_object_show(bg);
+
+   box = elm_box_add(win);
+   evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   elm_win_resize_object_add(win, box);
+   evas_object_show(box);
+
+   /* Add check box for changing the scrollable state */
+   ck = elm_check_add(win);
+   elm_check_state_set(ck, EINA_TRUE);
+   elm_object_text_set(ck, "Scrollable");
+   evas_object_size_hint_align_set(ck, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_box_pack_end(box, ck);
+   evas_object_show(ck);
+   evas_object_smart_callback_add(ck, "changed", _check_changed_cb, NULL);
 
    evas_object_resize(win, WIDTH, HEIGHT);
    evas_object_show(win);
