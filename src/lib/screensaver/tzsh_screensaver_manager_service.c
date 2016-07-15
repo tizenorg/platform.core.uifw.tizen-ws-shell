@@ -97,6 +97,36 @@ _tzsh_srv_private_data_get(tzsh_screensaver_manager_service_h service)
 }
 
 TZSH_EXPORT int
+tzsh_screensaver_manager_service_enable(tzsh_screensaver_manager_service_h service)
+{
+   struct private_data *pd;
+
+   if (!service) TZSH_ERR_RET(TZSH_ERROR_INVALID_PARAMETER);
+
+   pd = _tzsh_srv_private_data_get(service);
+   if (!pd) TZSH_ERR_RET(TZSH_ERROR_OUT_OF_MEMORY);
+
+   tws_service_screensaver_manager_enable(pd->tws_srv_scrsaver_mng);
+
+   TZSH_ERR_SUCCESS_RET;
+}
+
+TZSH_EXPORT int
+tzsh_screensaver_manager_service_disable(tzsh_screensaver_manager_service_h service)
+{
+   struct private_data *pd;
+
+   if (!service) TZSH_ERR_RET(TZSH_ERROR_INVALID_PARAMETER);
+
+   pd = _tzsh_srv_private_data_get(service);
+   if (!pd) TZSH_ERR_RET(TZSH_ERROR_OUT_OF_MEMORY);
+
+   tws_service_screensaver_manager_disable(pd->tws_srv_scrsaver_mng);
+
+   TZSH_ERR_SUCCESS_RET;
+}
+
+TZSH_EXPORT int
 tzsh_screensaver_manager_service_state_change_cb_set(tzsh_screensaver_manager_service_h service, tzsh_screensaver_manager_service_cb cb_func, void *data)
 {
    struct private_data *pd;

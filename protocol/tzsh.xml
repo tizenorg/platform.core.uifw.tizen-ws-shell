@@ -264,6 +264,14 @@
   <interface name="tws_service_screensaver_manager" version="1">
     <request name="destroy" type="destructor">
     </request>
+    <request name="enable">
+      <description summary="enable the screen saver">
+      </description>
+    </request>
+    <request name="disable">
+      <description summary="disable the screen saver">
+      </description>
+    </request>
     <request name="idle_time_set">
       <description summary="set idle time">
         The idle time specifies the number of milliseconds since the last input was received
