@@ -63,6 +63,28 @@ int tzsh_screensaver_manager_service_destroy(tzsh_screensaver_manager_service_h 
 
 /**
  * @internal
+ * @brief Enables the screen saver.
+ * @since_tizen 3.0
+ * @param[in] service The screensaver service handle to be destroyed
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ */
+int tzsh_screensaver_manager_service_enable(tzsh_screensaver_manager_service_h service);
+
+/**
+ * @internal
+ * @brief Disables the screen saver and activated screen saver is deactivated.
+ * @since_tizen 3.0
+ * @param[in] service The screensaver service handle to be destroyed
+ * @return @c 0 on success, otherwise a negative error value
+ * @retval #TZSH_ERROR_NONE Successful
+ * @retval #TZSH_ERROR_INVALID_PARAMETER Invalid parameter
+ */
+int tzsh_screensaver_manager_service_disable(tzsh_screensaver_manager_service_h service);
+
+/**
+ * @internal
  * @brief Sets the callback function to be called when the screensaver state is changed.
  * @since_tizen 3.0
  * @param[in] service The screensaver service handle
