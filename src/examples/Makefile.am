@@ -7,6 +7,7 @@ AM_CPPFLAGS = \
    -I$(top_srcdir)/src/lib/volume/ \
    -I$(top_srcdir)/src/lib/call/ \
    -I$(top_srcdir)/src/lib/srv/ \
+   -I$(top_srcdir)/src/lib/indicator/ \
    -I$(top_builddir)/src/lib/ \
    -I$(top_builddir)/src/lib/quickpanel/ \
    -I$(top_builddir)/src/lib/lockscreen/ \
@@ -14,6 +15,7 @@ AM_CPPFLAGS = \
    -I$(top_builddir)/src/lib/call/ \
    -I$(top_builddir)/src/lib/tvsrv/ \
    -I$(top_builddir)/src/lib/screensaver/ \
+   -I$(top_builddir)/src/lib/indicator/ \
    @ELEMENTARY_CFLAGS@
 
 bin_PROGRAMS = \
@@ -22,7 +24,8 @@ quickpanel-client \
 tvsrv-service \
 tvsrv-client \
 screensaver-manager-service \
-screensaver-service
+screensaver-service \
+indicator-service
 
 quickpanel_service_SOURCES = quickpanel-service.c
 quickpanel_service_CFLAGS = $(AM_CFALGS)
@@ -64,4 +67,11 @@ screensaver_service_CFLAGS = $(AM_CFALGS)
 screensaver_service_LDADD = \
    $(top_builddir)/src/lib/common/libtzsh_common.la \
    $(top_builddir)/src/lib/screensaver/libtzsh_screensaver_service.la \
+   @ELEMENTARY_LIBS@
+
+indicator_service_SOURCES = indicator-service.c
+indicator_service_CFLAGS = $(AM_CFALGS)
+indicator_service_LDADD = \
+   $(top_builddir)/src/lib/common/libtzsh_common.la \
+   $(top_builddir)/src/lib/indicator/libtzsh_indicator_service.la \
    @ELEMENTARY_LIBS@
