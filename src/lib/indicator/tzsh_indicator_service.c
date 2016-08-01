@@ -11,7 +11,27 @@ struct private_data
    } cb;
 };
 
-TZSH_SERVICE_BASE_IMPL(indicator)
+TZSH_EXPORT tzsh_indicator_service_h
+tzsh_indicator_service_create(tzsh_h tzsh, tzsh_window win)
+{
+   if (!tzsh)
+     {
+        TZSH_LAST_ERR_SET(TZSH_ERROR_INVALID_PARAMETER);
+        return NULL;
+     }
+
+   TZSH_ERR_SUCCESS_SET;
+   return tzsh_service_create(tzsh, win, "indicator");
+}
+
+TZSH_EXPORT int
+tzsh_indicator_service_destroy(tzsh_indicator_service_h name)
+{
+   if (!name)
+     TZSH_ERR_RET(TZSH_ERROR_INVALID_PARAMETER);
+   tzsh_service_destroy((tzsh_service_h)name);
+   TZSH_ERR_SUCCESS_RET;
+}
 
 TZSH_EXPORT int
 tzsh_indicator_service_content_region_set(tzsh_indicator_service_h service, unsigned int angle, tzsh_region_h region)
@@ -69,8 +89,8 @@ _tzsh_service_cb_destroy(void *data)
    free(pd);
 }
 
-TZSH_EXPORT int
-tzsh_indicator_service_property_change_cb_set(tzsh_indicator_service_h service, tzsh_indicator_service_cb cb_func, void *data)
+static struct private_data *
+_tzsh_indicator_private_data_get(tzsh_indicator_service_h service)
 {
    struct private_data *pd;
 
@@ -78,28 +98,41 @@ tzsh_indicator_service_property_change_cb_set(tzsh_indicator_service_h service, 
      {
         pd = calloc(1, sizeof(struct private_data));
         if (!pd)
-          TZSH_ERR_RET(TZSH_ERROR_OUT_OF_MEMORY);
+          return NULL;
 
         pd->tws_service_indicator =
            tws_service_indicator_get(service->tws_service);
         if (!pd->tws_service_indicator)
           {
              free(pd);
-             TZSH_ERR_RET(TZSH_ERROR_OUT_OF_MEMORY);
+             return NULL;
           }
+
+        tws_service_indicator_set_user_data(pd->tws_service_indicator, pd);
+        service->private_data = pd;
 
         tzsh_service_destroy_callback_add(service, _tzsh_service_cb_destroy, service);
 
-        tws_service_indicator_set_user_data(pd->tws_service_indicator, pd);
-
-        service->private_data = pd;
+        tws_service_indicator_add_listener(pd->tws_service_indicator,
+                                           &_tws_service_indicator_listener,
+                                           service);
      }
+
+   return pd;
+}
+
+TZSH_EXPORT int
+tzsh_indicator_service_property_change_cb_set(tzsh_indicator_service_h service, tzsh_indicator_service_cb cb_func, void *data)
+{
+   struct private_data *pd;
+
+   if (!service) TZSH_ERR_RET(TZSH_ERROR_INVALID_PARAMETER);
+
+   pd = _tzsh_indicator_private_data_get(service);
+   if (!pd) TZSH_ERR_RET(TZSH_ERROR_OUT_OF_MEMORY);
 
    pd->cb.func = cb_func;
    pd->cb.data = data;
-
-   tws_service_indicator_add_listener(pd->tws_service_indicator,
-                                      &_tws_service_indicator_listener, service);
 
    TZSH_ERR_SUCCESS_RET;
 }
